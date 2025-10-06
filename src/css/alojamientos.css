@@ -72,7 +72,7 @@ main {
   line-height: 1.5;
 }
 
-.divRedes {
+/* .divRedes {
   flex-direction: row;
   height: 110px;
   margin-top: 15px;
@@ -87,7 +87,7 @@ main {
 
 .logosRedes:hover {
   transform: scale(1.3);
-}
+} */
 
 /* Pantalla final oculta */
 .hola {

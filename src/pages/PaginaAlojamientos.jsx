@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Navbar from '../components/Navbar';
 import SelectorDestino from '../components/SelectorDestino';
 import SelectorFechas from '../components/SelectorFechas';
 import Presupuesto from '../components/Presupuesto';
@@ -55,7 +54,6 @@ function PaginaAlojamientos() {
 
   return (
     <>
-      <Navbar />
       <div
         style={{
           backgroundImage: `url(${fondoAlojamientos})`,
