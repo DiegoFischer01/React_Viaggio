@@ -18,7 +18,7 @@ function CardAlojamiento({ id, nombre, descripcion, imagen, seleccionado, onSele
               className={`btn btn-sm ${seleccionado ? 'btn-secondary' : 'btn-warning'}`}
               onClick={handleClick}
             >
-              {seleccionado ? 'Seleccionado (click para quitar)' : 'Seleccionar'}
+              {seleccionado ? 'Seleccionado' : 'Seleccionar'}
             </button>
           </div>
         </div>

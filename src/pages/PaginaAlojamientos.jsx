@@ -5,7 +5,7 @@ import Presupuesto from '../components/alojamientos/Presupuesto';
 import Alojamientos from '../components/alojamientos/Alojamientos';
 import ActividadesBoton from '../components/alojamientos/ActividadesBoton';
 
-
+import '../css/alojamientos.css';
 import fondoAlojamientos from '../assets/alojamientos/PortadasHoteles/lineas-grise-dos.svg';
 
 import argentinoImg from '../assets/alojamientos/PortadasHoteles/Argentino.png';
