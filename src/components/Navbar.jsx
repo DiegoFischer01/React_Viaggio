@@ -1,6 +1,7 @@
 import "../css/navbar.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import logo from "../assets/home/logo.svg";
+import { Link } from "react-router-dom";
 
 export default function Navbar() {
   return (
@@ -20,14 +21,10 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link" href="/destinos">
-                Destinos
-              </a>
+              <Link className="nav-link" to="/destinos">Destinos</Link> |{""}
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/sobre-viaggio">
-                Sobre Viaggio
-              </a>
+              <Link className="nav-link" to="/sobreViaggio">Sobre Viaggio</Link> |{""}
             </li>
             <li className="nav-item">
               <a
