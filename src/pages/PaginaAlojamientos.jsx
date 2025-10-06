@@ -5,7 +5,7 @@ import SelectorFechas from '../components/SelectorFechas';
 import Presupuesto from '../components/Presupuesto';
 import Alojamientos from '../components/Alojamientos';
 import ActividadesBoton from '../components/ActividadesBoton';
-import Footer from '../components/Footer';
+
 
 import fondoAlojamientos from '../assets/alojamientos/PortadasHoteles/lineas-grise-dos.svg';
 
@@ -94,7 +94,7 @@ function PaginaAlojamientos() {
           <ActividadesBoton visible={alojamientoSeleccionado != null} />
         </div>
       </div>
-      <Footer />
+
     </>
   );
 }
