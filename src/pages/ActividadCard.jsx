@@ -1,5 +1,5 @@
 import React from "react";
-import "./actividades.css";
+import "../css/actividades.css";
 
 
 export default function ActividadCard({ actividad, itinerario, setItinerario }) {

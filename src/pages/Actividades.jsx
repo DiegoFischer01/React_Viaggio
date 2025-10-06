@@ -1,9 +1,9 @@
     // src/pages/Actividades.jsx
     import { useState, useEffect } from "react";
     import ActividadCard from "./ActividadCard.jsx";
-    import Navbar from "./NavBar.jsx";
-    import Footer from "./Footer.jsx";
-    import "./actividades.css";
+    import Navbar from "../components/Navbar.jsx";
+    import Footer from "../components/Footer.jsx";
+    import "../css/actividades.css";
 
     const nuevasActividades = [
     {

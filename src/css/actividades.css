@@ -5,9 +5,6 @@
     object-fit: contain;
     }
 
-    .navbar {
-    background-color: rgba(0, 0, 0, 0.5);
-    }
 
     /* Ajuste del botón "Registrarse" */
     .nav-link.btn-warning {
