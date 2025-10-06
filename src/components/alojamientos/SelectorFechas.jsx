@@ -22,7 +22,7 @@ function SelectorFechas({ fechaLlegada, setFechaLlegada, fechaRegreso, setFechaR
       </div>
 
       <div className="col-md-6">
-        <label htmlFor="fecha-regreso">Fecha de regreso:</label>
+        <label htmlFor="fecha-regreso">Fecha de regreso (opcional)</label>
         <input
           type="date"
           className="form-control form-control-lg"

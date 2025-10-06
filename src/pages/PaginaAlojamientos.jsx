@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import SelectorDestino from '../components/SelectorDestino';
-import SelectorFechas from '../components/SelectorFechas';
-import Presupuesto from '../components/Presupuesto';
-import Alojamientos from '../components/Alojamientos';
-import ActividadesBoton from '../components/ActividadesBoton';
+import SelectorDestino from '../components/alojamientos/SelectorDestino';
+import SelectorFechas from '../components/alojamientos/SelectorFechas';
+import Presupuesto from '../components/alojamientos/Presupuesto';
+import Alojamientos from '../components/alojamientos/Alojamientos';
+import ActividadesBoton from '../components/alojamientos/ActividadesBoton';
 
 
 import fondoAlojamientos from '../assets/alojamientos/PortadasHoteles/lineas-grise-dos.svg';
