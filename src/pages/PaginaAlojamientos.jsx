@@ -4,6 +4,8 @@ import SelectorFechas from '../components/alojamientos/SelectorFechas';
 import Presupuesto from '../components/alojamientos/Presupuesto';
 import Alojamientos from '../components/alojamientos/Alojamientos';
 import ActividadesBoton from '../components/alojamientos/ActividadesBoton';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 import '../css/alojamientos.css';
 import fondoAlojamientos from '../assets/alojamientos/PortadasHoteles/lineas-grise-dos.svg';
@@ -54,6 +56,8 @@ function PaginaAlojamientos() {
 
   return (
     <>
+      <Navbar />
+
       <div
         style={{
           backgroundImage: `url(${fondoAlojamientos})`,
@@ -63,7 +67,7 @@ function PaginaAlojamientos() {
           minHeight: '100vh',
         }}
       >
-        <div className="container mt-5 mb-5">
+        <div className="container mt-2 mb-5">
           <SelectorDestino ciudad={ciudad} setCiudad={setCiudad} formularioIntentado={formularioIntentado} />
           <SelectorFechas
             fechaLlegada={fechaLlegada}
@@ -93,6 +97,7 @@ function PaginaAlojamientos() {
         </div>
       </div>
 
+      <Footer />
     </>
   );
 }
