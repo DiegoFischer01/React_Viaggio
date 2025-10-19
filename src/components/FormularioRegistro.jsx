@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { useNavigate, Link } from 'react-router-dom';
 import '../css/FormularioRegistro.css';
 import imgRegistro from '../assets/registrarse/img-registrarse.png';
-
 
 const FormularioRegistro = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,8 @@ const FormularioRegistro = () => {
     contraseña: '',
     contraseña2: ''
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -59,7 +61,7 @@ const FormularioRegistro = () => {
       text: 'Ahora puedes iniciar sesión',
       confirmButtonText: 'Aceptar'
     }).then(() => {
-      window.location.href = '/login';
+      navigate('/login'); // Redirige a Login.jsx
     });
   };
 
@@ -102,7 +104,7 @@ const FormularioRegistro = () => {
 
         <div className="a-iniciar-contenedor">
           <a href="/">‹ Volver a inicio</a>
-          <a className="a-iniciar" href="/login">Ya tengo cuenta ›</a>
+          <Link className="a-iniciar" to="/login">Ya tengo cuenta ›</Link>
         </div>
       </div>
 
