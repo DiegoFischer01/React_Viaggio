@@ -1,5 +1,4 @@
 import "../css/destinos.css";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 import Olavarria from "../assets/destinos/Olavarria.jpg";
@@ -25,7 +24,6 @@ export default function Destinos() {
 
   return (
     <>
-      <Navbar />
 <div className="columnas-imagenes-contenedor">
   <h2>Destinos</h2>
   <div className="columna-imagenes">
