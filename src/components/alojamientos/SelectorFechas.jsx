@@ -2,6 +2,26 @@ function SelectorFechas({ fechaLlegada, setFechaLlegada, fechaRegreso, setFechaR
   const hoy = new Date().toISOString().split('T')[0];
   const mostrarError = formularioIntentado && fechaLlegada === '';
 
+  const handleFechaLlegadaChange = (e) => {
+    const nuevaFecha = e.target.value;
+    setFechaLlegada(nuevaFecha);
+
+    // Si la fecha de regreso quedó inválida, la borramos
+    if (fechaRegreso && new Date(fechaRegreso) < new Date(nuevaFecha)) {
+      setFechaRegreso('');
+    }
+  };
+
+  const handleFechaRegresoChange = (e) => {
+    const nuevaFecha = e.target.value;
+    if (new Date(nuevaFecha) >= new Date(fechaLlegada || hoy)) {
+      setFechaRegreso(nuevaFecha);
+    } else {
+      alert("La fecha de regreso no puede ser anterior a la de llegada.");
+      setFechaRegreso('');
+    }
+  };
+
   return (
     <div className="row mb-3">
       <div className="col-md-6">
@@ -11,7 +31,7 @@ function SelectorFechas({ fechaLlegada, setFechaLlegada, fechaRegreso, setFechaR
           className={`form-control form-control-lg ${mostrarError ? 'is-invalid' : ''}`}
           id="fecha-llegada"
           value={fechaLlegada}
-          onChange={(e) => setFechaLlegada(e.target.value)}
+          onChange={handleFechaLlegadaChange}
           min={hoy}
         />
         {mostrarError && (
@@ -28,7 +48,7 @@ function SelectorFechas({ fechaLlegada, setFechaLlegada, fechaRegreso, setFechaR
           className="form-control form-control-lg"
           id="fecha-regreso"
           value={fechaRegreso}
-          onChange={(e) => setFechaRegreso(e.target.value)}
+          onChange={handleFechaRegresoChange}
           min={fechaLlegada || hoy}
         />
       </div>
