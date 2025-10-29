@@ -28,12 +28,12 @@ const Login = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        // Si el backend devuelve error (por ej. credenciales incorrectas)
+        // Si el backend devuelve error 
         Swal.fire("Error", data.message || "Correo o contraseña incorrectos", "error");
         return;
       }
 
-      // 🔹 Éxito: guardar token o info si tu backend lo devuelve
+      // 🔹 Éxito: guardar info
       localStorage.setItem("token", data.token);
 
       Swal.fire({
@@ -42,7 +42,7 @@ const Login = () => {
         text: "Inicio de sesión exitoso",
         confirmButtonText: "Entrar",
       }).then(() => {
-        navigate("/perfil"); // Cambia esta ruta al dashboard o página principal del usuario
+        navigate("/perfil"); // Cambiar ruta
       });
 
     } catch (error) {
