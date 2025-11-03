@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "leaflet/dist/leaflet.css";
@@ -26,12 +27,19 @@ import parqueHeliosE from "../assets/home/parqueHeliosE.png";
 import Navbar from "../components/Navbar";
 
 export default function Home() {
-  useEffect(() => {
-    // === LEAFLET MAP ===
-    const map = L.map("mapa").setView([-36.8933, -60.3225], 13);
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "&copy; OpenStreetMap contributors",
-    }).addTo(map);
+    const navigate = useNavigate();
+
+    function destinos() {
+        navigate("/destinos");
+    }
+
+    useEffect(() => {
+
+        // === LEAFLET MAP ===
+        const map = L.map("mapa").setView([-36.8933, -60.3225], 13);
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors",
+        }).addTo(map);
 
     L.marker([-36.8933, -60.3225])
       .addTo(map)
@@ -110,13 +118,14 @@ export default function Home() {
           return;
         } else msg.textContent = "";
 
-        if (zone.id === "drop-zone") {
-          const placeholder = document.createElement("div");
-          placeholder.classList.add("placeholder");
-          placeholder.style.width = "50%";
-          placeholder.style.visibility = "hidden";
-          zonaOrigen.replaceChild(placeholder, el);
-          placeholder.dataset.placeholderFor = id;
+            if (zone.id === "drop-zone") {
+            const placeholder = document.createElement("div");
+            placeholder.classList.add("placeholder");
+            placeholder.style.width = "50%";
+            placeholder.style.display = "inline-block";     
+            placeholder.style.visibility = "hidden";
+            zonaOrigen.replaceChild(placeholder, el);
+            placeholder.dataset.placeholderFor = id;
 
           const cont = document.createElement("div");
           cont.classList.add("info-container", "fade-in");
@@ -125,9 +134,9 @@ export default function Home() {
           el.draggable = false;
           el.classList.add("en-dropzone");
 
-          const data = itemData[id];
-          const info = document.createElement("div");
-          info.classList.add("brg-info");
+            const data = itemData[id];
+            const info = document.createElement("div");
+            info.classList.add("brg-info");
 
           // Clonar estrellas del elemento original
           const estrellas = el.querySelector(".drg-estrellas")
@@ -136,19 +145,19 @@ export default function Home() {
 
           info.innerHTML = `
         <h3>${data.titulo}</h3>
-        ${estrellas}
         <p>"${data.descripcion}"</p>
         `;
 
-          const close = document.createElement("button");
-          close.textContent = "X";
-          close.style.position = "absolute";
-          close.style.top = "0px";
-          close.style.right = "10px";
-          close.style.border = "none";
-          close.style.background = "transparent";
-          close.style.fontSize = "20px";
-          close.style.cursor = "pointer";
+            const close = document.createElement("button");
+            close.textContent = "X";
+            close.style.position = "absolute";
+            close.style.top = "0px";
+            close.style.right = "10px";
+            close.style.border = "none";
+            close.style.background = "transparent";
+            close.style.fontSize = "20px";
+            close.style.cursor = "pointer";
+            close.style.zIndex = "999";
 
           close.addEventListener("click", () => {
             cont.classList.remove("fade-in");
@@ -178,23 +187,21 @@ export default function Home() {
     };
   }, []);
 
-  // JSX ------------------------------------------------------------------------
-  return (
-    <>
-      {/* HERO */}
-      <div className="contenedor-inicio-info container-fluid">
-        <div className="row justify-content-center align-items-center contenedor-inicio">
-          <div className="col-lg-8 text-center inicio-info">
-            <h1 className="display-3">Una mejor experiencia de turismo</h1>
-            <p className="fs-4">
-              Tu itinerario personalizado a donde sea que vayas
-            </p>
-            <div className="boton-contenedor">
-              <button className="btn-comenzar btn-lg">Comenzar</button>
+    // JSX ------------------------------------------------------------------------
+    return (
+        <>
+        {/* HERO */}
+        <div className="contenedor-inicio-info container-fluid">
+            <div className="row justify-content-center align-items-center contenedor-inicio">
+            <div className="col-lg-8 text-center inicio-info">
+                <h1 className="display-3">Una mejor experiencia de turismo</h1>
+                <p className="fs-4">Tu itinerario personalizado a donde sea que vayas</p>
+                <div className="boton-contenedor">
+                <button onClick={destinos} className="btn-comenzar btn-lg">Comenzar</button>
+                </div>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
 
       {/* PÁGINA 1 */}
       <div className="contenedor-pag1 container">
@@ -204,41 +211,39 @@ export default function Home() {
           <p>Lo mejor de la ciudad en la palma de tus manos</p>
         </div>
 
-        <div className="cards-contenedor">
-          <div className="img-card img-card-top">
-            <img src={iglesiaSanJose} alt="Iglesia San José" />
-            <div className="info-contenedor">
-              <h2>Iglesia San José</h2>
-              <p>
-                Iglesia principal de la ciudad, punto histórico y religioso.
-              </p>
+            <div className="cards-contenedor">
+            <div className="img-card img-card-top">
+                <img src={iglesiaSanJose} alt="Iglesia San José" />
+                <div className="info-contenedor">
+                <h2>Iglesia San José</h2>
+                <p>Iglesia principal de la ciudad, punto de referencia histórico y religioso, con su arquitectura neogótica, declarado como patrimonio histórico local.</p>
+                </div>
             </div>
-          </div>
-          <div className="img-card img-card-top">
-            <img src={laMaxima} alt="La Máxima" />
-            <div className="info-contenedor">
-              <h2>La Máxima</h2>
-              <p>
-                Reserva natural con fauna local, senderos y espacios verdes.
-              </p>
+            <div className="img-card img-card-top">
+                <img src={laMaxima} alt="La Máxima" />
+                <div className="info-contenedor">
+                <h2>La Máxima</h2>
+                <p>Fauna local (Ciervos, aves, reptiles). Áreas verdes, juegos infantiles, parrilas.
+                Senderos para caminar y espacios recreativos.</p>
+                </div>
             </div>
-          </div>
-          <div className="img-card margen-inferior img-card-bottom">
-            <img src={museoEmiliozzi} alt="Museo Emiliozzi" />
-            <div className="info-contenedor">
-              <h2>Museo Hnos. Emiliozzi</h2>
-              <p>Íconos del automovilismo argentino, con autos originales.</p>
+            <div className="img-card margen-inferior img-card-bottom">
+                <img src={museoEmiliozzi} alt="Museo Emiliozzi" />
+                <div className="info-contenedor">
+                <h2>Museo Hnos. Emiliozzi</h2>
+                <p>los corredos Juan y Dante Emiliozzi, íconos del automovilismo argentino.
+                    ubicaco en su antiguo taller. Autos originales (como la "Galera"), trofeos, herrmientas y documentos. Patrimonio automovilístico nacional.</p>
+                </div>
             </div>
-          </div>
-          <div className="img-card margen-inferior img-card-bottom">
-            <img src={parqueMitre} alt="Parque Mitre" />
-            <div className="info-contenedor">
-              <h2>Parque Mitre</h2>
-              <p>Pulmón verde urbano con ferias y actividades recreativas.</p>
+            <div className="img-card margen-inferior img-card-bottom">
+                <img src={parqueMitre} alt="Parque Mitre" />
+                <div className="info-contenedor">
+                <h2>Parque Mitre</h2>
+                <p>Lugar de encuentro para caminatas, ferias y eventos, principal pulmón verde urbano y punto social de Olavarria, puentes, juegos y pista para correr o andar en bici</p>
+                </div>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
 
       {/*ACORDEON MOBILE PAG 1*/}
       <div
@@ -356,34 +361,23 @@ export default function Home() {
       {/* PAG 2*/}
       <div className="parallax">
         {/*SOBRE VIAGGIO*/}
-        <div className="conte">
-          <div className="casa-contenedor container-fluid bg-dark">
-            <div className="info casi">
-              <div className="info-h3-p">
-                <h3>HOLA! ESTO ES VIAGGIO</h3>
-                <hr className="hr-sobreviaggio" />
-                <p>
-                  Viaggio es una guía digital pensada para que descubras los
-                  mejor de <strong>Olavarría</strong> de forma simple, visual y
-                  auténtica.
-                  <br />
-                  Reunimos los rincones hitóricos, los espacios verdes, las
-                  experiencias culturales y tambien{" "}
-                  <strong>Los mejores alojamientos</strong>, para que puedas
-                  planear tu viaje completo desde un solo lugar.
-                </p>
-                <a
-                  className="a-boton-comenzar"
-                  href="./paginas/sobreViaggio.html"
-                >
-                  <button id="btn-conocerMas">Conocer más</button>
-                </a>
-              </div>
+        <div className="conte d-flex justify-content-center">
+            <div className="casa-contenedor bg-dark">
+                <div className="info casi container-fluid">
+                    <div className="info-h3-p">
+                        <h3>HOLA! ESTO ES VIAGGIO</h3>
+                        <hr className="hr-sobreviaggio"/>
+                        <p>Viaggio es una guía digital pensada para que descubras los mejor de <strong>Olavarría</strong> de forma simple, visual y auténtica.<br/>Reunimos los rincones hitóricos, los espacios verdes, las experiencias culturales y tambien <strong>Los mejores alojamientos</strong>, para que puedas planear tu viaje completo desde un solo lugar.</p>
+                        <a className="a-boton-comenzar" href="./paginas/sobreViaggio.html">
+                        <button id="btn-conocerMas">Conocer más</button>
+                        </a>
+                        
+                    </div>
+                </div>
+                <div className="ilustracion-contenedor">
+                        <img src={ilustracionInicio} alt=""/>
+                </div>
             </div>
-            <div className="ilustracion-contenedor">
-              <img src={ilustracionInicio} alt="" />
-            </div>
-          </div>
         </div>
       </div>
 
@@ -393,114 +387,107 @@ export default function Home() {
         <div id="mapa" className="mapa"></div>
       </div>
 
-      {/* COMENTARIOS */}
-      <div className="draggable-container">
-        <div className="drop-zone zone" id="drop-zone">
-          <div className="zona-aqui">
-            Arrastrá aquí cualquiera de las personas para ver su comentario
-          </div>
+        {/* COMENTARIOS */}
+        <div className="draggable-container">
+            <div className="drop-zone zone" id="drop-zone">
+            <div className="zona-aqui">
+                Arrastrá aquí cualquiera de las personas para ver su comentario
+            </div>
+            </div>
+            <div id="mensaje" className="msj"></div>
+            <div className="zone container" id="zona-origen">
+            <div className="drg" id="draggable1" draggable="true">
+                <img className="drg-img drg-img-js" src={fotoVivi} alt="" />
+                <div className="drg-estrellas">
+                <p>★</p><p>★</p><p>★</p><p>★</p><p>★</p>
+                </div>
+            </div>
+            <div className="drg" id="draggable2" draggable="true">
+                <img className="drg-img drg-img-js" src={fotoSergio} alt="" />
+                <div className="drg-estrellas">
+                <p>★</p><p>★</p><p>★</p><p>★</p><p>★</p>
+                </div>
+            </div>
+            <div className="drg" id="draggable3" draggable="true">
+                <img className="drg-img drg-img-js" src={fotoCarolina} alt="" />
+                <div className="drg-estrellas">
+                <p>★</p><p>★</p><p>★</p><p>★</p><p>★</p>
+                </div>
+            </div>
+            <div className="drg" id="draggable4" draggable="true">
+                <img className="drg-img drg-img-js" src={joseMauricio} alt="" />
+                <div className="drg-estrellas">
+                <p>★</p><p>★</p><p>★</p><p>★</p><p>★</p>
+                </div>
+            </div>
+            <div className="drg" id="draggable5" draggable="true">
+                <img className="drg-img drg-img-js" src={karenSimari} alt="" />
+                <div className="drg-estrellas">
+                <p>★</p><p>★</p><p>★</p><p>★</p><p>★</p>
+                </div>
+            </div>
+            </div>
         </div>
-        <div id="mensaje" className="msj"></div>
-        <div className="zone container" id="zona-origen">
-          <div className="drg" id="draggable1" draggable="true">
-            <img className="drg-img drg-img-js" src={fotoVivi} alt="" />
-            <div className="drg-estrellas">
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-            </div>
-          </div>
-          <div className="drg" id="draggable2" draggable="true">
-            <img className="drg-img drg-img-js" src={fotoSergio} alt="" />
-            <div className="drg-estrellas">
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-            </div>
-          </div>
-          <div className="drg" id="draggable3" draggable="true">
-            <img className="drg-img drg-img-js" src={fotoCarolina} alt="" />
-            <div className="drg-estrellas">
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-            </div>
-          </div>
-          <div className="drg" id="draggable4" draggable="true">
-            <img className="drg-img drg-img-js" src={joseMauricio} alt="" />
-            <div className="drg-estrellas">
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-            </div>
-          </div>
-          <div className="drg" id="draggable5" draggable="true">
-            <img className="drg-img drg-img-js" src={karenSimari} alt="" />
-            <div className="drg-estrellas">
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-              <p>★</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* CARRUSEL */}
-      <div className="carousel-contenedor container-fluid">
-        <div className="carrusel">
-          <div
-            id="carouselExampleCaptions"
-            className="carousel slide"
-            data-bs-ride="carousel"
-          >
-            <div className="carousel-inner">
-              <div className="carousel-item active ">
-                <img
-                  src={centroCultural}
-                  className="d-block w-100"
-                  alt="Centro Cultural"
-                />
-              </div>
-              <div className="carousel-item">
-                <img src={mitre} className="d-block w-100" alt="Parque Mitre" />
-              </div>
-              <div className="carousel-item">
-                <img
-                  src={parqueHeliosE}
-                  className="d-block w-100"
-                  alt="Helios E."
-                />
-              </div>
+
+        {/* <!--COMENTARIOS SUELTOS PARA CELULAR--> */}
+        <div className="comentarios-contenedor container-fluid">
+            <div className="comentarios">
+                <div className="comentario">
+                <img className="" src={fotoVivi} alt=""/>
+                <h2>Vivi Blasco</h2>
+                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                </div>
+                <div className="comentario">
+                <img className="" src={fotoSergio} alt=""/>
+                <h2>Sergio Garcia Retegui</h2>
+                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                </div>
+                <div className="comentario">
+                <img className="" src={fotoCarolina} alt=""/>
+                <h2>Carolina Vasconcellos</h2>
+                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                </div>
+                <div className="comentario">
+                <img className="jose-karen" src={joseMauricio} alt=""/>
+                <h2>Jose Mauricio</h2>
+                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                </div>
+                <div className="comentario">
+                <img className="jose-karen" src={karenSimari} alt=""/>
+                <h2>Karen Simari</h2>
+                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                </div>
             </div>
-            <button
-              className="carousel-control-prev"
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide="prev"
-            >
-              <span className="carousel-control-prev-icon"></span>
-            </button>
-            <button
-              className="carousel-control-next"
-              type="button"
-              data-bs-target="#carouselExampleCaptions"
-              data-bs-slide="next"
-            >
-              <span className="carousel-control-next-icon"></span>
-            </button>
-          </div>
         </div>
-      </div>
-    </>
-  );
+    
+
+
+        {/* CARRUSEL */}
+        <div className="carousel-contenedor">
+            <div className="carrusel">
+            <div id="carouselExampleCaptions" className="carousel slide " data-bs-ride="carousel">
+                <div className="carousel-inner">
+                    <div className="carousel-item active ">
+                        <img src={centroCultural} className="d-block w-100" alt="Centro Cultural" />
+                    </div>
+                    <div className="carousel-item">
+                        <img src={mitre} className="d-block w-100" alt="Parque Mitre" />
+                    </div>
+                    <div className="carousel-item">
+                        <img src={parqueHeliosE} className="d-block w-100" alt="Helios E." />
+                    </div>
+                </div>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span className="carousel-control-prev-icon"></span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span className="carousel-control-next-icon"></span>
+                </button>
+            </div>
+            </div>
+        </div>
+
+        </>
+    );
 }
