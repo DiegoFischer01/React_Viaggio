@@ -45,6 +45,14 @@
 .registro-contenedor .circle3 { width: 10px; height: 10px; top: 15px; left: 30px; }
 .registro-contenedor .circle4 { width: 6px; height: 6px; top: 20px; left: 60px; }
 
+.circle {
+  transform: translate(90px, -30px);
+}
+
+.circle-contenedor {
+  padding-bottom: 15px;
+}
+
 .registro-contenedor .circle-contenedor h2 {
   font-size: 2rem;
   font-weight: 700;
