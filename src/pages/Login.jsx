@@ -18,33 +18,26 @@ const Login = () => {
     }
 
     try {
-      // 🔹 Petición al backend
-      const response = await fetch("http://localhost:4000/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, contraseña }),
-      });
+      const response = await fetch("http://localhost:3000/usuarios");
+      const usuarios = await response.json();
 
-      const data = await response.json();
+      const usuario = usuarios.find(
+        (u) => u.email === email && u.password === contraseña
+      );
 
-      if (!response.ok) {
-        // Si el backend devuelve error 
-        Swal.fire("Error", data.message || "Correo o contraseña incorrectos", "error");
+      if (!usuario) {
+        Swal.fire("Error", "Correo o contraseña incorrectos", "error");
         return;
       }
 
-      // 🔹 Éxito: guardar info
-      localStorage.setItem("token", data.token);
-
       Swal.fire({
         icon: "success",
-        title: `¡Bienvenido/a!`,
+        title: `¡Bienvenido/a, ${usuario.nombre}!`,
         text: "Inicio de sesión exitoso",
         confirmButtonText: "Entrar",
       }).then(() => {
-        navigate("/perfil"); // Cambiar ruta
+        navigate("/perfil");
       });
-
     } catch (error) {
       console.error(error);
       Swal.fire("Error", "Hubo un problema al conectar con el servidor", "error");
