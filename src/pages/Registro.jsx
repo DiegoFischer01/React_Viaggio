@@ -20,9 +20,10 @@ const Registro = () => {
     setFormData((prev) => ({ ...prev, [id]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const { nombre, apellido, email, contraseña, contraseña2 } = formData;
 
+    // Validaciones básicas
     if (!nombre || !apellido || !email || !contraseña || !contraseña2) {
       Swal.fire('Campos incompletos', 'Por favor complete todos los campos', 'warning');
       return;
@@ -44,25 +45,35 @@ const Registro = () => {
       return;
     }
 
-    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-    const existe = usuarios.find((u) => u.email.toLowerCase() === email.toLowerCase());
+    try {
+      // Petición al backend NestJS
+      const response = await fetch('http://localhost:3000/usuarios', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nombre: `${nombre} ${apellido}`,
+          email,
+          password: contraseña,
+        }),
+      });
 
-    if (existe) {
-      Swal.fire('Correo en uso', 'El correo ya está registrado', 'error');
-      return;
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Error al registrar usuario');
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Registro exitoso',
+        text: 'Ahora puedes iniciar sesión',
+        confirmButtonText: 'Aceptar',
+      }).then(() => {
+        navigate('/login');
+      });
+    } catch (error) {
+      console.error(error);
+      Swal.fire('Error', error.message, 'error');
     }
-
-    usuarios.push({ nombre, apellido, email, contraseña });
-    localStorage.setItem('usuarios', JSON.stringify(usuarios));
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Registro exitoso',
-      text: 'Ahora puedes iniciar sesión',
-      confirmButtonText: 'Aceptar'
-    }).then(() => {
-      navigate('/login');
-    });
   };
 
   return (
