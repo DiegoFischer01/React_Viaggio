@@ -41,20 +41,24 @@ function PaginaAlojamientos() {
     setSeleccionadoHoy(true);
   };
 
+  const hotelesFiltrados = hoteles.filter(h => {
+    if(!presupuesto) return true;
+    return h.precio <= parseInt(presupuesto);
+  });
+
 
   const formularioValido = ciudad !== '' && fechaLlegada !== '';
 
   const handleContinuar = () => {
-    setFormularioIntentado(true);
-    if (formularioValido) {
-      setMostrarAlojamientos(true);
-      const seccion = document.getElementById('seccion-alojamientos');
-      if (seccion) {
-        seccion.scrollIntoView({ behavior: 'smooth' });
+      setFormularioIntentado(true);
+      if (formularioValido) {
+        setMostrarAlojamientos(true);
+        setTimeout(() => {
+          const seccion = document.getElementById('seccion-alojamientos');
+          if (seccion) seccion.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
       }
-    }
-  };
-
+    };
 
   return (
     <>
@@ -89,7 +93,7 @@ function PaginaAlojamientos() {
 
           {mostrarAlojamientos && (
             <Alojamientos
-              alojamientos={hoteles}
+              alojamientos={hotelesFiltrados}
               alojamientoSeleccionado={alojamientoSeleccionado}
               onSeleccionar={handleSeleccionar}
             />

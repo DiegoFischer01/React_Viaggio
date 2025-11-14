@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import "../../css/cardAlojamientos.css"
 
 
-function CardAlojamiento({ id, nombre, descripcion, imagen, seleccionado, onSeleccionar, }) {
+function CardAlojamiento({ id, nombre, descripcion, imagen, precio, estrellas, seleccionado, onSeleccionar, }) {
   const navigate = useNavigate();
 
   const handleVerMas = () => {
@@ -15,16 +16,24 @@ function CardAlojamiento({ id, nombre, descripcion, imagen, seleccionado, onSele
   return (
     <div className="col-md-4 mb-4">
       <div className={`alojamientos card h-100 ${seleccionado ? 'seleccionada' : ''}`}>
-        <img src={imagen} className="card-img-top" alt={nombre} />
+        <div className="img-container">
+            <img src={imagen} className="card-img-top" alt={nombre} />
+            <div className="precio-container">
+              <p>${precio} por noche</p>
+            </div>
+            <div className="estrellas-container">
+              ⭐ <strong>{estrellas}</strong>
+            </div>
+        </div>
         <div className="card-alojamiento card-body">
           <h5 className="card-title">{nombre}</h5>
           <p className="card-text">{descripcion}</p>
           <div className="d-flex justify-content-between">
-            <button onClick={handleVerMas} className="btn btn-outline-primary btn-sm">
+            <button onClick={handleVerMas} className="btn btn-verMas btn-sm">
               Ver más
             </button>
             <button
-              className={`btn btn-sm ${seleccionado ? 'btn-success' : 'btn-warning'}`}
+              className={`btn ${seleccionado ? 'btn-seleccionado' : 'btn-seleccionar'}`}
               onClick={handleClick}
             >
               {seleccionado ? 'Seleccionado' : 'Seleccionar'}

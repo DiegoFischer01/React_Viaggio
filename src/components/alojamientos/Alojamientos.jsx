@@ -16,6 +16,8 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
             id={a.id}
             nombre = {a.nombre}
             descripcion = {a.descripcion}
+            precio = {a.precio}
+            estrellas = {a.estrellas}
             imagen={imagenesHoteles[a.imagenUrl]}
             seleccionado={alojamientoSeleccionado?.id === a.id}
             onSeleccionar={handleSeleccionar}

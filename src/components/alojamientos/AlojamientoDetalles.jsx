@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import alojamientosDetalles from "../../data/alojamientosDetalles";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -10,8 +10,38 @@ import "../../css/alojamientoDetalles.css";
 
 function AlojamientoDetalle() {
   const { id } = useParams();
-  const alojamiento = alojamientosDetalles.find(a => a.id === parseInt(id));
-  const [mainImage, setMainImage] = useState(alojamiento.imagen[0].url);
+
+  // Estado final donde se guarda TODO JUNTO (backend + local)
+  const [hotel, setHotel] = useState(null);
+  const [mainImage, setMainImage] = useState(null);
+
+  useEffect(() => {
+    async function cargar() {
+      // 👉 1. DATOS DEL BACKEND
+      const res = await fetch(`http://localhost:3000/hoteles/${id}`);
+      const backend = await res.json();
+
+      // 👉 2. DATOS LOCALES (galería + descripcion larga + servicios)
+      const local = alojamientosDetalles.find(a => a.id === parseInt(id));
+
+      // 👉 3. FUSIÓN (acá se junta todo)
+      const fusionado = {
+        ...backend,          // nombre, estrellas, precio, ubicación, imagenPrincipal
+        ...local             // imagenes, descripcion larga, servicios
+      };
+
+      setHotel(fusionado);
+
+      // Imagen principal por defecto
+      if (local?.imagen?.length > 0) {
+        setMainImage(local.imagen[0].url);
+      }
+    }
+
+    cargar();
+  }, [id]);
+
+  if (!hotel) return <p>Cargando...</p>;
 
   return (
     <div className="detalle-container">
@@ -23,7 +53,7 @@ function AlojamientoDetalle() {
         modules={[FreeMode]}
         className="detalle-miniaturas"
       >
-        {alojamiento.imagen.map((img, index) => (
+        {hotel.imagen.map((img, index) => (
           <SwiperSlide key={index}>
             <img
               src={img.url}
@@ -44,9 +74,9 @@ function AlojamientoDetalle() {
       <div className="detalle-info">
         {/* IZQUIERDA */}
         <div className="detalle-info-left">
-          <h2>{alojamiento.nombre}</h2>
+          <h2>{hotel.nombre}</h2>
           <p className="detalle-subinfo">
-            ⭐ {alojamiento.puntuacion} · {alojamiento.ubicacion}
+            ⭐ {hotel.estrellas} · {hotel.direccion}
           </p>
 
           {/* SERVICIOS */}
@@ -71,15 +101,15 @@ function AlojamientoDetalle() {
 
           {/* DESCRIPCIÓN */}
           <h3 className="detalle-titulo">Descripción</h3>
-          <p className="detalle-descripcion">{alojamiento.descripcion}</p>
+          <p className="detalle-descripcion">{hotel.descripcion}</p>
         </div>
 
         {/* DERECHA */}
         <div className="detalle-info-right">
           <div className="reserva-card">
-            <h3>{alojamiento.nombre}</h3>
+            <h3>{hotel.nombre}</h3>
             <p className="detalle-rating">
-              ⭐ {alojamiento.puntuacion} · 20 reviews
+              ⭐ {hotel.estrellas} · 20 reviews
             </p>
 
             <div className="reserva-form">
@@ -95,7 +125,7 @@ function AlojamientoDetalle() {
               </select>
 
               <button className="btn-reserve">
-                Reservar ${alojamiento.precio}
+                Reservar ${hotel.precio}
               </button>
             </div>
 

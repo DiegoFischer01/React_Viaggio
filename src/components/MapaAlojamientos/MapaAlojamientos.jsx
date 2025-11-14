@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import alojamientosMapa from "../../data/alojamientosMapa";
 
 
 export default function MapaAlojamientos() {
+
+    const navigate = useNavigate();
+
     useEffect(() => {
         // Crear mapa
         const map = L.map("mapa").setView([-36.8933, -60.3225], 14);
@@ -26,17 +30,40 @@ export default function MapaAlojamientos() {
         alojamientosMapa.forEach((aloj) => {
         const popupContent = `
             <div style="text-align:center; width:180px;">
-            <img src="${aloj.imagen}" alt="${aloj.nombre}" style="width:100%; border-radius:8px; margin-bottom:8px;" />
+            <img src="${aloj.imagen}" alt="${aloj.nombre}"
+                style="width:100%; border-radius:8px; margin-bottom:8px;" />
             <h4 style="margin:0; font-size:14px;">${aloj.nombre}</h4>
             <p style="font-size:12px; color:#555;">${aloj.descripcion}</p>
-            <a href="${aloj.link}" style="display:inline-block; margin-top:6px; padding:4px 8px; background:#eb6424; color:#fff; border-radius:4px; text-decoration:none; font-size:12px;">Ver más</a>
-            </div>
-        `;
 
-        L.marker(aloj.coords, { icon: redIcon })
-            .addTo(map)
-            .bindPopup(popupContent);
+        <button id="verMas-${aloj.id}"
+            style="
+            margin-top:6px;
+            padding:4px 8px;
+            background:#eb6424;
+            color:white;
+            border:none;
+            border-radius:4px;
+            font-size:12px;
+            cursor:pointer;
+            ">
+            Ver más
+        </button>
+        </div>
+    `;
+
+    L.marker(aloj.coords, { icon: redIcon })
+        .addTo(map)
+        .bindPopup(popupContent)
+        .on("popupopen", () => {
+        const btn = document.getElementById(`verMas-${aloj.id}`);
+        if (btn) {
+            btn.addEventListener("click", () => {
+            navigate(`/alojamientosDetalles/${aloj.id}`);
+            });
+        }
         });
+    });
+
 
         // Limpiar mapa cuando se desmonta el componente
         return () => {
