@@ -361,7 +361,7 @@
   object-fit: cover;
 }
 
-.a-boton-comenzar button {
+.btn-comenzar {
   padding: 7px;
   border: none;
   border-radius: 10px;

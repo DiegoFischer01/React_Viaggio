@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "leaflet/dist/leaflet.css";
@@ -361,7 +361,7 @@ export default function Home() {
                         <hr className="hr-sobreviaggio"/>
                         <p>Viaggio es una guía digital pensada para que descubras los mejor de <strong>Olavarría</strong> de forma simple, visual y auténtica.<br/>Reunimos los rincones hitóricos, los espacios verdes, las experiencias culturales y tambien <strong>Los mejores alojamientos</strong>, para que puedas planear tu viaje completo desde un solo lugar.</p>
                         <a className="a-boton-comenzar" href="./paginas/sobreViaggio.html">
-                        <button id="btn-conocerMas">Conocer más</button>
+                        <Link className="btn-comenzar" to="/sobreViaggio" id="btn-conocerMas">Conocer más</Link>
                         </a>
                         
                     </div>

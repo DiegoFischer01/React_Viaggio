@@ -1,13 +1,180 @@
+
 import CardAlojamiento from './CardAlojamiento';
 import { imagenesHoteles } from '../../data/imagenesHoteles';
+import { useAuth } from '../../context/AuthContext';
+import { useState } from 'react';
 
 function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) {
   const handleSeleccionar = (hotel) => {
     onSeleccionar(hotel);
   };
 
+  const [ showForm, setShowForm ] = useState(false);  
+  const [ nombre, setNombre] = useState('');
+  const [ estrellas , setEstrellas] = useState("");
+  const [ descripcion, setDescripcion] = useState('');
+  const [ precio, setPrecio] = useState('');
+  const [direccion, setDireccion] = useState('');
+  const [servicios, setServicios] = useState([""]);
+
+
+  const [ imagenPrincipal, setImagenPrincipal ] = useState(null);
+  const [ imagenesExtras, setImagenesExtras ] = useState([]);
+
+  const handleExtraImageChange = (index, value) => {
+    const nuevas = [...imagenesExtras];
+    nuevas[index] = value;
+    setImagenesExtras(nuevas);
+  };
+
+  const agregarCampoImagen = () => {
+    setImagenesExtras([...imagenesExtras, ""]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const nuevoHotel = {
+      nombre,
+      precio,
+      estrellas,
+      descripcion,
+      imagenPrincipal,
+      imagenesExtras,
+      direccion,
+      servicios,
+    };
+
+    const response = await fetch("http://localhost:3000/hoteles", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(nuevoHotel),
+    });
+
+    if (response.ok) {
+      alert("Alojamiento agregado correctamente");
+      setShowForm(false);
+    }
+  };
+
+
+  const { user } = useAuth();
+
+  const isAdmin = user?.role === 'admin';
+
   return (
     <div className="container mt-5" id="seccion-alojamientos">
+      { isAdmin && (
+        <div className="admin-action">
+          <button onClick={() => setShowForm(true)}>Agregar alojamiento</button>
+          <button>Modificar alojamiento</button>
+          <button>Borrar alojamiento</button>
+        </div>
+      )}
+
+    {showForm && (
+      <div className="modal-overlay">
+        <div className="modal-content">
+
+          <h2>Nuevo alojamiento</h2>
+
+          <form className='form-agregarAlojamiento' onSubmit={handleSubmit}>
+
+            <label>Nombre</label>
+            <input
+              type="text"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              required
+            />
+
+            <label>Ubicación / Dirección</label>
+            <input
+              type="text"
+              value={direccion}
+              onChange={(e) => setDireccion(e.target.value)}
+              required
+            />
+
+            <label>Precio</label>
+            <input
+              type="number"
+              value={precio}
+              onChange={(e) => setPrecio(e.target.value)}
+              required
+            />
+
+            <label>Estrellas (0 a 5)</label>
+            <input
+              type="number"
+              min="0"
+              max="5"
+              value={estrellas}
+              onChange={(e) => setEstrellas(e.target.value)}
+              required
+            />
+
+            <label>Descripción</label>
+            <textarea
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+              required
+            />
+
+            <label>Servicios</label>
+
+            {servicios.map((serv, index) => (
+              <input
+                key={index}
+                type="text"
+                placeholder={`Servicio ${index + 1}`}
+                value={serv}
+                onChange={(e) => {
+                  const nuevos = [...servicios];
+                  nuevos[index] = e.target.value;
+                  setServicios(nuevos);
+                }}
+              />
+            ))}
+            <button type="button" onClick={() => setServicios([...servicios, ""])}>+ Agregar servicio</button>
+
+
+            <label>Imagen principal (URL)</label>
+            <input
+              type="text"
+              value={imagenPrincipal}
+              onChange={(e) => setImagenPrincipal(e.target.value)}
+              required
+            />
+
+            <label>Imágenes adicionales (URLs)</label>
+
+            {imagenesExtras.map((url, index) => (
+              <input
+                key={index}
+                type="text"
+                placeholder={`URL imagen ${index + 1}`}
+                value={url}
+                onChange={(e) => handleExtraImageChange(index, e.target.value)}
+              />
+            ))}
+
+            <button type="button" onClick={agregarCampoImagen}>
+              + Agregar otra imagen
+            </button>
+
+            <div className="btns-modal">
+              <button type="submit" className="btn-guardar">Guardar</button>
+              <button type="button" className="btn-cancelar" onClick={() => setShowForm(false)}>Cancelar</button>
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    )}
+
+
       <h2 className="text-center mb-4">Elige tu alojamiento</h2>
       <div className="row">
         {alojamientos.map((a) => (
@@ -18,9 +185,9 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
             descripcion = {a.descripcion}
             precio = {a.precio}
             estrellas = {a.estrellas}
-            imagen={imagenesHoteles[a.imagenUrl]}
+            imagen={imagenesHoteles[a.imagenUrl] || a.imagenPrincipal || "https://via.placeholder.com/400"}
             seleccionado={alojamientoSeleccionado?.id === a.id}
-            onSeleccionar={handleSeleccionar}
+            onSeleccionar={(hotel) => handleSeleccionar(hotel)}
           />
         ))}
       </div>

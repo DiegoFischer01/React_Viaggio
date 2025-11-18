@@ -84,7 +84,7 @@ function PaginaAlojamientos() {
           />
           <Presupuesto presupuesto={presupuesto} setPresupuesto={setPresupuesto} />
           <button
-            className="btn btn-warning btn-lg mt-4"
+            className="btn btn-continuar-alojamiento btn-warning btn-lg mt-4"
             onClick={handleContinuar}
             disabled={!formularioValido}
           >

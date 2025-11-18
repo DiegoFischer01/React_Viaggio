@@ -27,7 +27,6 @@ function CardAlojamiento({ id, nombre, descripcion, imagen, precio, estrellas, s
         </div>
         <div className="card-alojamiento card-body">
           <h5 className="card-title">{nombre}</h5>
-          <p className="card-text">{descripcion}</p>
           <div className="d-flex justify-content-between">
             <button onClick={handleVerMas} className="btn btn-verMas btn-sm">
               Ver más
