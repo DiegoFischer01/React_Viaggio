@@ -16,6 +16,7 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
   const [ precio, setPrecio] = useState('');
   const [direccion, setDireccion] = useState('');
   const [servicios, setServicios] = useState([""]);
+  const [ deleteMode, setDeleteMode ] = useState(false);
 
 
   const [ imagenPrincipal, setImagenPrincipal ] = useState(null);
@@ -62,13 +63,32 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
 
   const isAdmin = user?.role === 'admin';
 
+  const borrarAlojamiento = async (id) => {
+    const confirmar = window.confirm("¿Seguro que desea borrar este alojamiento?");
+
+    if(!confirmar) return;
+
+    const res = await fetch(`http://localhost:3000/hoteles/${id}`, {
+      method: "DELETE",
+    });
+
+    if(res.ok) {
+      alert("Alojamiento eliminado");
+      window.location.reload();
+    }else {
+      alert("Error al borrar alojamiento");
+    }
+  };
+
   return (
     <div className="container mt-5" id="seccion-alojamientos">
       { isAdmin && (
         <div className="admin-action">
           <button onClick={() => setShowForm(true)}>Agregar alojamiento</button>
           <button>Modificar alojamiento</button>
-          <button>Borrar alojamiento</button>
+          <button onClick={() => setDeleteMode(!deleteMode)}>
+            {deleteMode ? "Cancelar eliminación" : "Borrar alojamiento"}
+          </button>
         </div>
       )}
 
@@ -188,6 +208,8 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
             imagen={imagenesHoteles[a.imagenUrl] || a.imagenPrincipal || "https://via.placeholder.com/400"}
             seleccionado={alojamientoSeleccionado?.id === a.id}
             onSeleccionar={(hotel) => handleSeleccionar(hotel)}
+            onDelete={borrarAlojamiento}
+            deleteMode={deleteMode}
           />
         ))}
       </div>
