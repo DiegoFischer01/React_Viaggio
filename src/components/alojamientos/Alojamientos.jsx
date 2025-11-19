@@ -2,7 +2,7 @@
 import CardAlojamiento from './CardAlojamiento';
 import { imagenesHoteles } from '../../data/imagenesHoteles';
 import { useAuth } from '../../context/AuthContext';
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) {
   const handleSeleccionar = (hotel) => {
@@ -16,8 +16,10 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
   const [ precio, setPrecio] = useState('');
   const [direccion, setDireccion] = useState('');
   const [servicios, setServicios] = useState([""]);
-  const [ deleteMode, setDeleteMode ] = useState(false);
 
+  const [ deleteMode, setDeleteMode ] = useState(false);
+  const [ editMode, setEditMode ] = useState(false);
+  const [ hotelEditado, setHotelEditado ] = useState(null);
 
   const [ imagenPrincipal, setImagenPrincipal ] = useState(null);
   const [ imagenesExtras, setImagenesExtras ] = useState([]);
@@ -29,6 +31,10 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
   };
 
   const agregarCampoImagen = () => {
+    if(imagenesExtras.length >= 5) {
+      alert("Máximo 5 imágenes adicionales");
+      return;
+    }
     setImagenesExtras([...imagenesExtras, ""]);
   };
 
@@ -46,15 +52,26 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
       servicios,
     };
 
-    const response = await fetch("http://localhost:3000/hoteles", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+    let url = "http://localhost:3000/hoteles";
+    let method = "POST";
+
+    //SI ESTAMOS EDITANDO USAR PUT
+    if(hotelEditado) {
+      url = `http://localhost:3000/hoteles/${hotelEditado}`;
+      method = "PUT";
+    }
+
+    const response = await fetch(url, {
+      method,
+      headers: { "Content-type" : "application/json" },
       body: JSON.stringify(nuevoHotel),
     });
 
     if (response.ok) {
-      alert("Alojamiento agregado correctamente");
-      setShowForm(false);
+      alert(hotelEditado ? "Alojamiento actualizado" : "Alojamiento agregado");
+      window.location.reload();
+    }else {
+      alert("Error al guardar alojamiento");
     }
   };
 
@@ -80,15 +97,41 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
     }
   };
 
+  const comenzarEdicion = (id) => {
+    const hotel = alojamientos.find(h => h.id === id);
+
+    if(!hotel) return alert("No encontrado");
+
+    //CARGAR DATOS AL FORMULARIO
+    setNombre(hotel.nombre);
+    setDescripcion(hotel.descripcion || "");
+    setPrecio(hotel.precio);
+    setEstrellas(hotel.estrellas);
+    setImagenPrincipal(hotel.imagenPrincipal || "");
+    setImagenesExtras(hotel.imagenesExtras || []);
+    setHotelEditado(hotel.id);
+    setShowForm(true);
+  }
+
   return (
     <div className="container mt-5" id="seccion-alojamientos">
       { isAdmin && (
         <div className="admin-action">
+
           <button onClick={() => setShowForm(true)}>Agregar alojamiento</button>
-          <button>Modificar alojamiento</button>
+
+          <button onClick={() => {
+            setEditMode(!editMode);
+            setDeleteMode(false);
+            setShowForm(false);
+            }}>
+              {editMode ? "Cancelar edición" : "Modificar alojamiento"}
+          </button>
+
           <button onClick={() => setDeleteMode(!deleteMode)}>
             {deleteMode ? "Cancelar eliminación" : "Borrar alojamiento"}
           </button>
+
         </div>
       )}
 
@@ -210,6 +253,8 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
             onSeleccionar={(hotel) => handleSeleccionar(hotel)}
             onDelete={borrarAlojamiento}
             deleteMode={deleteMode}
+            editMode={editMode}
+            onEdit={comenzarEdicion}
           />
         ))}
       </div>

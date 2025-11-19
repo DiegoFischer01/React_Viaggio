@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import "../../css/cardAlojamientos.css"
 
 
-function CardAlojamiento({ id, nombre, descripcion, imagen, precio, estrellas, seleccionado, onSeleccionar, onDelete, deleteMode }) {
+function CardAlojamiento({ id, nombre, descripcion, imagen, precio, estrellas, seleccionado, onSeleccionar, onDelete, deleteMode, editMode, onEdit }) {
   const navigate = useNavigate();
 
   const handleVerMas = () => {
@@ -41,6 +41,12 @@ function CardAlojamiento({ id, nombre, descripcion, imagen, precio, estrellas, s
             {deleteMode && (
               <button onClick={() => onDelete(id)} className="btn btn-danger btn-sm" style={{marginLeft: "10px"}}>
                 Borrar
+              </button>
+            )}
+
+            {editMode && (
+              <button onClick={() => onEdit(id)} className="btn btn-warning btn-sm" style={{marginLeft:"10px"}}>
+                Editar
               </button>
             )}
           </div>
