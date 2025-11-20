@@ -7,9 +7,18 @@ import { FreeMode } from "swiper/modules";
 import alojamientosDetalles from "../../data/alojamientosDetalles";
 import { FaWifi, FaParking, FaUtensils, FaSnowflake } from "react-icons/fa";
 import "../../css/alojamientoDetalles.css";
+import { useAuth } from "../../context/AuthContext";
 
 function AlojamientoDetalle() {
   const { id } = useParams();
+
+  const [ comentarios, setComentarios ] = useState([]);
+  const [ nuevoComentario, setNuevoComentario ] = useState("");
+  const [menuAbierto, setMenuAbierto] = useState(null);
+  const { user } = useAuth();
+  const [editandoId, setEditandoId] = useState(null);
+  const [mensajeEditado, setMensajeEditado] = useState("");
+
 
   // ---------------------------
   // 🟣 MAPA DE SERVICIOS → ICONOS
@@ -72,6 +81,8 @@ function AlojamientoDetalle() {
       // imagen principal
       setMainImage(imagenesFinal[0].url);
 
+
+
       // 👉 fusión de data final
       const fusionado = {
         ...local,
@@ -82,10 +93,111 @@ function AlojamientoDetalle() {
       setHotel(fusionado);
     }
 
+    async function cargarComentarios() {
+      const res = await fetch(`http://localhost:3000/comentarios/${id}`);
+      const data = await res.json();
+      setComentarios(data);
+    }
+
+    cargarComentarios();
+
     cargar();
   }, [id]);
 
+  useEffect(() => {
+    const cerrar = () => setMenuAbierto(null);
+    window.addEventListener("click", cerrar);
+    return () => window.removeEventListener("click", cerrar);
+  }, []);
+
+
   if (!hotel) return <p>Cargando...</p>;
+
+
+  const enviarComentario = async () => {
+    if(!user) {
+      alert("Debes iniciar sesión para comentar.");
+      return;
+    }
+
+    if (!nuevoComentario.trim()) {
+      alert("Escribe un comentario.");
+      return;
+    }
+
+    const res = await fetch("http://localhost:3000/comentarios", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        hotelId: Number(id),
+        usuarioId: user.id,
+        usuarioNombre: user.nombre,
+        usuarioEmail: user.email,
+        mensaje: nuevoComentario,
+      }),
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      setNuevoComentario("");
+      setComentarios([data, ...comentarios]);
+    }
+  };
+
+    const borrarComentario = async (comentarioId) => {
+    const confirmar = confirm("¿Seguro que quieres eliminar este comentario?");
+    if (!confirmar) return;
+
+    const res = await fetch(`http://localhost:3000/comentarios/${comentarioId}`, {
+      method: "DELETE"
+    });
+
+    if (res.ok) {
+      setComentarios(comentarios.filter(c => c.id !== comentarioId));
+      setMenuAbierto(null);
+    }
+  };
+
+  function tiempoRelativo(fecha) {
+    const diff = (Date.now() - new Date(fecha).getTime()) / 1000; // segundos
+
+    if (diff < 60) return "Justo ahora";
+    if (diff < 3600) return `Hace ${Math.floor(diff / 60)} minutos`;
+    if (diff < 86400) return `Hace${Math.floor(diff / 3600)} hora`;
+    if (diff < 604800) return `Hace${Math.floor(diff / 86400)} días`;
+
+    const semanas = Math.floor(diff / 604800);
+    return semanas === 1 ? "1 week ago" : `${semanas} weeks ago`;
+  }
+
+  const editarComentario = async (comentarioId) => {
+    if (!mensajeEditado.trim()) {
+      alert("El comentario no puede estar vacío.");
+      return;
+    }
+
+    const res = await fetch(`http://localhost:3000/comentarios/${comentarioId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ mensaje: mensajeEditado }),
+    });
+
+    if (res.ok) {
+      const actualizado = await res.json();
+
+      // Actualizar lista local
+      setComentarios(
+        comentarios.map((c) =>
+          c.id === comentarioId ? { ...c, mensaje: actualizado.mensaje } : c
+        )
+      );
+
+      setEditandoId(null); // cerrar editor
+      setMenuAbierto(null); // cerrar menú
+    }
+  };
+
+
 
   return (
     <div className="detalle-container">
@@ -180,6 +292,7 @@ function AlojamientoDetalle() {
           <p className="detalle-descripcion">{hotel.descripcion}</p>
         </div>
 
+
         {/* DERECHA */}
         <div className="detalle-info-right">
           <div className="reserva-card">
@@ -208,7 +321,109 @@ function AlojamientoDetalle() {
             <p className="no-charges">No se realiza ningún cargo aún</p>
           </div>
         </div>
-      </div>
+
+
+          <div className="comentarios-form-container">
+            <div className="h2-comentario-container">
+              <h2 className="detalle-titulo">Comentarios</h2>
+            </div>
+
+            <div className="comentarios-form">
+              <textarea
+                placeholder="Escribe tu comentario..."
+                value={nuevoComentario}
+                onChange={e => setNuevoComentario(e.target.value)}
+              />
+
+              <button onClick={enviarComentario}>Enviar</button>
+
+            </div>
+          </div>
+
+
+          
+        </div>
+        <div className="comentarios-lista-container">
+          <div className="comentarios-lista">
+            {comentarios.map(c => (
+            <div key={c.id} className="comentario-item">
+
+              <div className="comentario-header">
+                <strong>{c.usuarioNombre}</strong>
+                <span className="comentario-tiempo">{tiempoRelativo(c.fecha)}</span>
+
+                {user?.id === c.usuarioId && (
+                  <div className="menu-wrapper">
+                    <button
+                      className="menu-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setMenuAbierto(menuAbierto === c.id ? null : c.id);
+                      }}
+                    >
+                      ⋮
+                    </button>
+
+                    {menuAbierto === c.id && (
+                      <div
+                        className="menu-opciones"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <button onClick={() => {
+                          setEditandoId(c.id);
+                          setMensajeEditado(c.mensaje);
+                          setMenuAbierto(null);
+                        }}>
+                          Editar
+                        </button>
+
+                        <button onClick={() => borrarComentario(c.id)}>
+                          Eliminar
+                        </button>
+
+                      </div>
+                      
+                    )}
+
+                  </div>
+                )}
+
+              </div>
+                  <div className="p-comentarios-container">
+                    {editandoId === c.id ? (
+                      <div className="editar-comentario-box">
+                        <textarea
+                          value={mensajeEditado}
+                          onChange={(e) => setMensajeEditado(e.target.value)}
+                          className="editar-textarea"
+                        />
+
+                        <div className="editar-buttons">
+                          <button
+                            className="btn-guardar-edit"
+                            onClick={() => editarComentario(c.id)}
+                          >
+                            Guardar
+                          </button>
+
+                          <button
+                            className="btn-cancelar-edit"
+                            onClick={() => setEditandoId(null)}
+                          >
+                            Cancelar
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <p>{c.mensaje}</p>
+                    )}
+
+                  </div>
+            </div>
+            ))}
+            
+          </div>
+        </div>
     </div>
   );
 }

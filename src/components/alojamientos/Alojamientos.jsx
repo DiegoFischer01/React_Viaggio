@@ -9,6 +9,17 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
     onSeleccionar(hotel);
   };
 
+    const limpiarFormulario = () => {
+    setNombre("");
+    setPrecio("");
+    setEstrellas("");
+    setDescripcion("");
+    setImagenPrincipal("");
+    setImagenesExtras([]);
+
+    setHotelEditado(null);
+  };
+
   const [ showForm, setShowForm ] = useState(false);  
   const [ nombre, setNombre] = useState('');
   const [ estrellas , setEstrellas] = useState("");
@@ -41,6 +52,11 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(imagenesExtras.length > 5) {
+      alert("Máximo 5 imágenes adicionales");
+      return;
+    }
+
     const nuevoHotel = {
       nombre,
       precio,
@@ -68,6 +84,8 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
     });
 
     if (response.ok) {
+      limpiarFormulario();
+      setShowForm(false);
       alert(hotelEditado ? "Alojamiento actualizado" : "Alojamiento agregado");
       window.location.reload();
     }else {
@@ -118,7 +136,17 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
       { isAdmin && (
         <div className="admin-action">
 
-          <button onClick={() => setShowForm(true)}>Agregar alojamiento</button>
+          <button
+            onClick={() => {
+              limpiarFormulario();
+              setEditMode(false);
+              setDeleteMode(false);
+              setShowForm(true);
+            }}
+          >
+            Agregar alojamiento
+          </button>
+
 
           <button onClick={() => {
             setEditMode(!editMode);
@@ -139,7 +167,8 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
       <div className="modal-overlay">
         <div className="modal-content">
 
-          <h2>Nuevo alojamiento</h2>
+          <h2>{hotelEditado ? "Modificar alojamiento" : "Nuevo alojamiento"}</h2>
+
 
           <form className='form-agregarAlojamiento' onSubmit={handleSubmit}>
 
@@ -222,13 +251,23 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
               />
             ))}
 
-            <button type="button" onClick={agregarCampoImagen}>
+            <button type="button" onClick={agregarCampoImagen} disabled={imagenesExtras.length >= 5}>
               + Agregar otra imagen
             </button>
 
             <div className="btns-modal">
               <button type="submit" className="btn-guardar">Guardar</button>
-              <button type="button" className="btn-cancelar" onClick={() => setShowForm(false)}>Cancelar</button>
+            <button
+              type="button"
+              className="btn-cancelar"
+              onClick={() => {
+                limpiarFormulario();
+                setShowForm(false);
+              }}
+            >
+              Cancelar
+            </button>
+
             </div>
 
           </form>
