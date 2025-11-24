@@ -33,7 +33,7 @@ const Login = () => {
       }
 
       const data = await response.json();
-      login(data); // guarda user + token
+      login(data);
 
       Swal.fire({
         icon: "success",
@@ -41,8 +41,18 @@ const Login = () => {
         text: "Inicio de sesión exitoso",
         confirmButtonText: "Entrar",
       }).then(() => {
-        navigate("/perfil");
+
+        const redirect = localStorage.getItem("redirectAfterLogin");
+
+        if (redirect) {
+          localStorage.removeItem("redirectAfterLogin");
+          navigate(redirect);
+        } else {
+          navigate("/perfilUsuario");
+        }
+
       });
+
     } catch (error) {
       console.error(error);
       Swal.fire("Error", "Hubo un problema al conectar con el servidor", "error");

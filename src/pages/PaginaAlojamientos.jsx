@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import Swal from 'sweetalert2';
+
 import SelectorDestino from '../components/alojamientos/SelectorDestino';
 import SelectorFechas from '../components/alojamientos/SelectorFechas';
 import Presupuesto from '../components/alojamientos/Presupuesto';
 import Alojamientos from '../components/alojamientos/Alojamientos';
 import ActividadesBoton from '../components/alojamientos/ActividadesBoton';
 
-
 import '../css/alojamientos.css';
 import fondoAlojamientos from '../assets/alojamientos/PortadasHoteles/lineas-grise-dos.svg';
-
 
 function PaginaAlojamientos() {
   const [hoteles, setHoteles] = useState([]);
   const [seleccionadoHoy, setSeleccionadoHoy] = useState(false);
-  const [alojamientoSeleccionado, setAlojamientoSeleccionado] = useState( JSON.parse(localStorage.getItem(`alojamientoSeleccionado`)) || null );
+  const [alojamientoSeleccionado, setAlojamientoSeleccionado] = useState(
+    JSON.parse(localStorage.getItem(`alojamientoSeleccionado`)) || null
+  );
   const [ciudad, setCiudad] = useState('');
   const [fechaLlegada, setFechaLlegada] = useState('');
   const [fechaRegreso, setFechaRegreso] = useState('');
@@ -21,44 +25,62 @@ function PaginaAlojamientos() {
   const [formularioIntentado, setFormularioIntentado] = useState(false);
   const [mostrarAlojamientos, setMostrarAlojamientos] = useState(false);
 
+  const navigate = useNavigate();
+  const { user } = useAuth();
+
   useEffect(() => {
     fetch("http://localhost:3000/hoteles")
       .then((res) => res.json())
       .then((data) => setHoteles(data));
   }, []);
 
-
   const handleSeleccionar = (hotel) => {
-    if(!hotel) {
+
+    // 🔒 SI NO ESTÁ LOGEADO → cartel + redirección
+    if (!user) {
+      Swal.fire({
+        icon: "info",
+        title: "Inicia sesión para continuar",
+        text: "Debes iniciar sesión para seleccionar un alojamiento",
+        confirmButtonText: "Ingresar",
+      }).then(() => {
+        localStorage.setItem("redirectAfterLogin", "/alojamientos");
+        navigate("/login");
+      });
+      return;
+    }
+
+    // Si deselecciona → limpiar
+    if (!hotel) {
       setAlojamientoSeleccionado(null);
       localStorage.removeItem('alojamientoSeleccionado');
       setSeleccionadoHoy(false);
       return;
     }
 
+    // Si está logeado → guardar selección
     setAlojamientoSeleccionado(hotel);
     localStorage.setItem('alojamientoSeleccionado', JSON.stringify(hotel));
     setSeleccionadoHoy(true);
   };
 
   const hotelesFiltrados = hoteles.filter(h => {
-    if(!presupuesto) return true;
+    if (!presupuesto) return true;
     return h.precio <= parseInt(presupuesto);
   });
-
 
   const formularioValido = ciudad !== '' && fechaLlegada !== '';
 
   const handleContinuar = () => {
-      setFormularioIntentado(true);
-      if (formularioValido) {
-        setMostrarAlojamientos(true);
-        setTimeout(() => {
-          const seccion = document.getElementById('seccion-alojamientos');
-          if (seccion) seccion.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    };
+    setFormularioIntentado(true);
+    if (formularioValido) {
+      setMostrarAlojamientos(true);
+      setTimeout(() => {
+        const seccion = document.getElementById('seccion-alojamientos');
+        if (seccion) seccion.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  };
 
   return (
     <>
@@ -74,7 +96,12 @@ function PaginaAlojamientos() {
         <div className="container mb-5">
           <h2 className="titulo-destino">Elige tu destino</h2>
 
-          <SelectorDestino ciudad={ciudad} setCiudad={setCiudad} formularioIntentado={formularioIntentado} />
+          <SelectorDestino
+            ciudad={ciudad}
+            setCiudad={setCiudad}
+            formularioIntentado={formularioIntentado}
+          />
+
           <SelectorFechas
             fechaLlegada={fechaLlegada}
             setFechaLlegada={setFechaLlegada}
@@ -82,7 +109,12 @@ function PaginaAlojamientos() {
             setFechaRegreso={setFechaRegreso}
             formularioIntentado={formularioIntentado}
           />
-          <Presupuesto presupuesto={presupuesto} setPresupuesto={setPresupuesto} />
+
+          <Presupuesto
+            presupuesto={presupuesto}
+            setPresupuesto={setPresupuesto}
+          />
+
           <button
             className="btn btn-continuar-alojamiento btn-warning btn-lg mt-4"
             onClick={handleContinuar}
@@ -99,7 +131,7 @@ function PaginaAlojamientos() {
             />
           )}
 
-          <ActividadesBoton visible={seleccionadoHoy}/>
+          <ActividadesBoton visible={seleccionadoHoy} />
         </div>
       </div>
     </>
