@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import alojamientosMapa from "../../data/alojamientosMapa";
+import "../../css/mapaAlojamientos.css";
 
 
 export default function MapaAlojamientos() {
@@ -71,5 +72,5 @@ export default function MapaAlojamientos() {
         };
     }, []);
 
-    return <div id="mapa" style={{ height: "400px", width: "100%", borderRadius: "12px" }}></div>;
+    return <div id="mapa" className="mapa-ciudad"></div>;
 }

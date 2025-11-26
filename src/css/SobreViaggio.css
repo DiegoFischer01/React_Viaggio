@@ -87,6 +87,17 @@
     align-content: center;
     height: 100px;
     text-align: center;
+    padding-top: 100px;
+}
+
+.sucursales h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
 }
 
 .linea {
@@ -94,16 +105,33 @@
     color: #999;
 }
 
+.viaggio-titulo {
+    color: #eb6424;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.tarjetas {
+    padding-top: 70px;
+    padding-bottom: 80px;
+}
+
+hr {
+    border: 2px solid #eb6324;
+    width: 15%;
+    margin: 0 15px;
+    border-radius: 5px;
+}
+
 .tarjeta {
     flex: 1 1 30%;
     background-color: white;
-    border: 2px solid #007bff;
+    border: 2px solid #eb6424;
     border-radius: 8px;
     padding: 20px;
     box-sizing: border-box;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
 }
 
 .tarjeta:hover {
@@ -119,7 +147,7 @@
 }
 
 .tarjeta h3 {
-    color: #007bff;
+    color: #eb6424;
     font-size: 16px;
     margin: 10px 0;
 }

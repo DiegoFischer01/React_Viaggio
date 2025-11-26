@@ -19,7 +19,7 @@ export default function SobreViaggio() {
         <div className="row d-flex align-items-center">
           <div className="col-12 col-lg-6 h-100">
             <div className="sobre-viaggio info">
-              <h1 className="text-center text-lg-start">Somos Viaggio</h1>
+              <h1 className="viaggio-titulo text-center text-lg-start">Somos Viaggio</h1>
               <p>
                 Nos mueve la pasión por facilitar experiencias de viaje
                 auténticas y accesibles para todos. Creemos que descubrir nuevos
@@ -138,8 +138,8 @@ export default function SobreViaggio() {
       </div>
       <div className="sucursales">
         <h2>
-          <span className="linea">———————</span> Diseñamos experiencias
-          <span className="linea">———————</span>
+          <hr /> Diseñamos experiencias
+          <hr />
         </h2>
       </div>
       <div className="tarjetas row">
