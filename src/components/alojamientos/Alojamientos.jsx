@@ -41,6 +41,8 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
     setImagenesExtras(nuevas);
   };
 
+
+
   const agregarCampoImagen = () => {
     if(imagenesExtras.length >= 5) {
       alert("Máximo 5 imágenes adicionales");
@@ -130,6 +132,9 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
     setHotelEditado(hotel.id);
     setShowForm(true);
   }
+
+  
+
 
   return (
     <div className="container mt-5" id="seccion-alojamientos">

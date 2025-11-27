@@ -3,10 +3,15 @@ import { useState, useEffect } from "react";
 import ActividadCard from "./ActividadCard.jsx";
 import "../css/actividades.css";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useLocation } from "react-router-dom";
+import { useRef } from "react";
 
 export default function Actividades() {
     const { user } = useAuth();
     const isAdmin = user?.role === "admin";
+    const location = useLocation();
+    const initialLoad = useRef(true);
+
 
     const [mostrarFiltros, setMostrarFiltros] = useState(false);
     const [actividadesMostradas, setActividadesMostradas] = useState(6);
@@ -28,6 +33,16 @@ export default function Actividades() {
 
     const [editMode, setEditMode] = useState(false);
     const [deleteMode, setDeleteMode] = useState(false);
+
+    
+    useEffect(() => {
+    if (location.pathname === "/actividades" && initialLoad.current) {
+        initialLoad.current = false;
+        setItinerario([]);
+        localStorage.removeItem("itinerario");
+    }
+    }, [location.pathname]);
+
 
     // =========================================
     // 🔥 CARGAR ACTIVIDADES DESDE BACKEND

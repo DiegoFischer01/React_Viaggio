@@ -22,6 +22,7 @@ export default function App() {
 
   const shouldHideLayout = hideLayout.includes(location.pathname);
 
+
   return (
     <>
       {!shouldHideLayout && <Navbar />}

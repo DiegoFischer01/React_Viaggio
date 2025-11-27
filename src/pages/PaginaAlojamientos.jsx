@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Swal from 'sweetalert2';
+import { useLocation } from 'react-router-dom';
 
 import SelectorDestino from '../components/alojamientos/SelectorDestino';
 import SelectorFechas from '../components/alojamientos/SelectorFechas';
@@ -14,6 +15,16 @@ import fondoAlojamientos from '../assets/alojamientos/PortadasHoteles/lineas-gri
 
 function PaginaAlojamientos() {
   const [hoteles, setHoteles] = useState([]);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/alojamientos") {
+      // 🔥 solo limpiar el alojamiento seleccionado
+      setAlojamientoSeleccionado(null);
+      localStorage.removeItem("alojamientoSeleccionado");
+    }
+  }, [location.pathname]);
+
   const [seleccionadoHoy, setSeleccionadoHoy] = useState(false);
   const [alojamientoSeleccionado, setAlojamientoSeleccionado] = useState(
     JSON.parse(localStorage.getItem(`alojamientoSeleccionado`)) || null
@@ -27,6 +38,10 @@ function PaginaAlojamientos() {
 
   const navigate = useNavigate();
   const { user } = useAuth();
+
+
+
+
 
   // Cargar hoteles desde backend
   useEffect(() => {
@@ -45,6 +60,8 @@ function PaginaAlojamientos() {
       fechaRegreso: fechaRegreso || null
     }));
   }, [ciudad, fechaLlegada, fechaRegreso]);
+
+
 
   const handleSeleccionar = (hotel) => {
     // 🔒 Si no está logeado → cartel + redirección
