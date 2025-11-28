@@ -175,7 +175,7 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
           <h2>{hotelEditado ? "Modificar alojamiento" : "Nuevo alojamiento"}</h2>
 
 
-          <form className='form-agregarAlojamiento' onSubmit={handleSubmit}>
+          <form className='form-admin-alojamientos' onSubmit={handleSubmit}>
 
             <label>Nombre</label>
             <input

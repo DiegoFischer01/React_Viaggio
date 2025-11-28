@@ -183,7 +183,7 @@ ul {
   cursor: pointer;
 }
 
-.form-agregarAlojamiento {
+.form-admin-alojamientos {
   display: flex;
   flex-direction: column;
 }
@@ -223,14 +223,17 @@ ul {
   justify-content: center;
   align-items: center;
   z-index: 999;
+  border-radius: 10px;
 }
 
 .modal-content {
   background: white;
   padding: 25px;
-  width: 400px;
+  width: 800px;
   border-radius: 10px;
   gap: 10px;
+  transform: scale(0.8);
+  padding: 10px;
 }
 
 .form-alojamiento label {

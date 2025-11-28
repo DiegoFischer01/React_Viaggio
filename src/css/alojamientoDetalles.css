@@ -33,13 +33,14 @@
 /* IMAGEN PRINCIPAL */
 .detalle-principal {
   width: 100%;
+  object-fit: cover;
 }
 
 .detalle-img-principal {
   width: 100%;
   border-radius: 12px;
-  max-height: 500px;
   object-fit: cover;
+  max-height: 600px;
 }
 
 /* INFO + RESERVA */
