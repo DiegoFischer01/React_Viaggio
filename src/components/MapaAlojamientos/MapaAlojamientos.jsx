@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import alojamientosMapa from "../../data/alojamientosMapa";
+import actividadesMapa from "../../data/actividadesMapa"
 import "../../css/mapaAlojamientos.css";
 
 
@@ -12,7 +13,7 @@ export default function MapaAlojamientos() {
 
     useEffect(() => {
         // Crear mapa
-        const map = L.map("mapa").setView([-36.8933, -60.3225], 14);
+        const map = L.map("mapa").setView([-36.8933, -60.3225], 13);
 
         // Capa base
         L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -22,6 +23,13 @@ export default function MapaAlojamientos() {
         // Ícono rojo
         const redIcon = L.icon({
         iconUrl: "https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png",
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+        popupAnchor: [0, -32],
+        });
+
+        const blueIcon = L.icon({
+        iconUrl: "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png",
         iconSize: [32, 32],
         iconAnchor: [16, 32],
         popupAnchor: [0, -32],
@@ -66,11 +74,36 @@ export default function MapaAlojamientos() {
     });
 
 
+                // Agregar los alojamientos al mapa
+        actividadesMapa.forEach((act) => {
+        const popupContent = `
+            <div style="text-align:center; width:180px;">
+            <h4 style="margin:0; font-size:14px;">${act.nombre}</h4>
+
+        </div>
+    `;
+
+    L.marker(act.coords, { icon: blueIcon })
+        .addTo(map)
+        .bindPopup(popupContent)
+        .on("popupopen", () => {
+        const btn = document.getElementById(`verMas-${act.id}`);
+        if (btn) {
+            btn.addEventListener("click", () => {
+            navigate(`/alojamientosDetalles/${act.id}`);
+            });
+        }
+        });
+    });
+
+
         // Limpiar mapa cuando se desmonta el componente
         return () => {
         map.remove();
         };
     }, []);
+
+
 
     return <div id="mapa" className="mapa-ciudad"></div>;
 }

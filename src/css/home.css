@@ -401,6 +401,27 @@
   font-size: 50px;
 }
 
+.colores-mapa-info-container {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  gap: 10px;
+}
+
+.bloque-azul {
+  width: 15px;
+  height: 15px;
+  background-color: blue;
+  border-radius: 2px;
+}
+
+.bloque-rojo {
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  border-radius: 2px;
+}
+
 /*COMENTARIOS*/
 
 .draggable-container {

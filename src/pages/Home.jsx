@@ -377,6 +377,12 @@ export default function Home() {
       <div className="mapa-contenedor">
         <h2 className="mx-5">Mapa de la ciudad</h2>
         <MapaAlojamientos/>
+        <div className="colores-mapa-info-container">
+          <div className="bloque-azul"></div>
+          <p>Actividades</p>
+          <div className="bloque-rojo"></div>
+          <p>Alojamientos</p>
+        </div>
       </div>
 
         {/* COMENTARIOS */}
