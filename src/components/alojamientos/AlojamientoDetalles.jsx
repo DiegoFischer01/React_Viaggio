@@ -144,6 +144,8 @@ function AlojamientoDetalle() {
     };
   }, [hotelMapa, hotel]);
 
+
+
   // mientras no cargó el hotel
   if (!hotel) return <p>Cargando...</p>;
 

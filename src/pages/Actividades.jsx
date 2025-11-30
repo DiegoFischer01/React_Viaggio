@@ -148,39 +148,9 @@ export default function Actividades() {
         {/* Título y filtro */}
         <div className="titulo">
             <h2 className="mx-5">Explora nuevos lugares</h2>
-            <button id="btnFiltrar" onClick={() => setMostrarFiltros(!mostrarFiltros)}>
-            <img src=""/> Filtrar
-            </button>
         </div>
 
-        {/* FILTROS (SIN CAMBIOS) */}
-        {mostrarFiltros && (
-            <div className="menu-filtros">
-            <h4>Filtrar por intereses</h4>
-
-            <label>
-                <input type="checkbox" value="relajacion" /> Relajación
-            </label>
-            <br />
-
-            <label>
-                <input type="checkbox" value="aventura" /> Aventura
-            </label>
-            <br />
-
-            <label>
-                <input type="checkbox" value="gastronomia" /> Gastronomía
-            </label>
-            <br />
-
-            <label>
-                <input type="checkbox" value="cultural" /> Cultural
-            </label>
-            <br />
-
-            <button onClick={() => setMostrarFiltros(false)}>Cerrar</button>
-            </div>
-        )}
+        
 
         {/* ===========================
             🔥 ADMIN BOTONES
