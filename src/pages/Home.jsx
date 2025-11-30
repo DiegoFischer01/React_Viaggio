@@ -35,20 +35,6 @@ export default function Home() {
 
     useEffect(() => {
 
-        // === LEAFLET MAP ===
-
-
-    // === PARALLAX ===
-    const t1 = document.getElementById("parallax-texto");
-    const t2 = document.getElementById("parallax-texto2");
-
-    const parallax = () => {
-      const y = window.scrollY;
-      if (t1) t1.style.transform = `translateX(${y * 0.6}px)`;
-      if (t2) t2.style.transform = `translateX(${y * -0.6}px)`;
-    };
-    window.addEventListener("scroll", parallax);
-
     // === DRAG & DROP COMMENTS ===
     const zonaOrigen = document.getElementById("zona-origen");
     const dropZone = document.getElementById("drop-zone");
@@ -174,9 +160,6 @@ export default function Home() {
     setupDrop(zonaOrigen);
     setupDrop(dropZone);
 
-    return () => {
-      window.removeEventListener("scroll", parallax);
-    };
   }, []);
 
     // JSX ------------------------------------------------------------------------
@@ -431,30 +414,81 @@ export default function Home() {
         {/* <!--COMENTARIOS SUELTOS PARA CELULAR--> */}
         <div className="comentarios-contenedor container-fluid">
             <div className="comentarios">
-                <div className="comentario">
-                <img className="" src={fotoVivi} alt=""/>
-                <h2>Vivi Blasco</h2>
-                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                <div className="testimonial-wrapper">
+                  <div className="testimonial-image">
+                    <img src={fotoVivi} alt="persona" />
+                    <div className="testimonial-stars">★★★★★</div>
+                  </div>
+
+                  <div className="testimonial-card">
+
+                    <h3 className="testimonial-name">Vivi Blasco</h3>
+
+                    <p className="testimonial-text">
+                      "¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría.
+                      Clara, rápida y muy visual."
+                    </p>
+                  </div>
                 </div>
-                <div className="comentario">
-                <img className="" src={fotoSergio} alt=""/>
-                <h2>Sergio Garcia Retegui</h2>
-                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                <div className="testimonial-wrapper">
+                  <div className="testimonial-image">
+                    <img src={fotoSergio} alt="persona" />
+                    <div className="testimonial-stars">★★★★</div>
+                  </div>
+
+                  <div className="testimonial-card">
+
+                    <h3 className="testimonial-name">Sergio García Retegui</h3>
+
+                    <p className="testimonial-text">
+                      "Viaggio me ayudó a descubrir lugares increíbles como el Parque Mitre y la iglesia San José. ¡No sabía que Olavarría tenía tanto para ofrecer!"
+                    </p>
+                  </div>
                 </div>
-                <div className="comentario">
-                <img className="" src={fotoCarolina} alt=""/>
-                <h2>Carolina Vasconcellos</h2>
-                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                <div className="testimonial-wrapper">
+                  <div className="testimonial-image">
+                    <img src={fotoCarolina} alt="persona" />
+                    <div className="testimonial-stars">★★★★</div>
+                  </div>
+
+                  <div className="testimonial-card">
+
+                    <h3 className="testimonial-name">Carolina Vasconcellos</h3>
+
+                    <p className="testimonial-text">
+                      "La mejor guía turística de Olavarría. Me encantaron las fotos y la info útil para cada lugar."
+                    </p>
+                  </div>
                 </div>
-                <div className="comentario">
-                <img className="jose-karen" src={joseMauricio} alt=""/>
-                <h2>Jose Mauricio</h2>
-                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                <div className="testimonial-wrapper">
+                  <div className="testimonial-image">
+                    <img src={joseMauricio} alt="persona" />
+                    <div className="testimonial-stars">★★★★★</div>
+                  </div>
+
+                  <div className="testimonial-card">
+
+                    <h3 className="testimonial-name">José Mauricio</h3>
+
+                    <p className="testimonial-text">
+                      "Gracias a Viaggio visité el Museo de los Hermanos Emiliozzi. ¡Imperdible para los fans del automovilismo!"
+                    </p>
+                  </div>
                 </div>
-                <div className="comentario">
-                <img className="jose-karen" src={karenSimari} alt=""/>
-                <h2>Karen Simari</h2>
-                <p>"¡Excelente página! Encontré todo lo que necesitaba para organizar mi escapada a Olavarría. Clara, rápida y muy visual."</p>
+                <div className="testimonial-wrapper">
+                  <div className="testimonial-image">
+                    <img src={karenSimari} alt="persona" />
+                    <div className="testimonial-stars">★★★★★</div>
+                  </div>
+
+                  <div className="testimonial-card">
+
+                    <h3 className="testimonial-name">Karen Simari</h3>
+
+                    <p className="testimonial-text">
+                      "¡Me encantó la experiencia! Viaggio hizo que recorrer Olavarría fuera fácil y emocionante. Todo está explicado con detalle."
+                    </p>
+                  </div>
                 </div>
             </div>
         </div>

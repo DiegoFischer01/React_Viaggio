@@ -7,6 +7,8 @@ import MiViaje from "./pages/MiViaje.jsx";
 import Login from "./pages/Login.jsx";
 import AlojamientoDetalle from "./components/alojamientos/AlojamientoDetalles.jsx";
 
+import "./css/app.css";
+
 
 import PaginaAlojamientos from "./pages/PaginaAlojamientos.jsx";
 import PerfilUsuario from "./pages/PerfilUsuario.jsx";

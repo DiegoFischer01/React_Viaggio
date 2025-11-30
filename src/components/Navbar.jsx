@@ -26,7 +26,8 @@ export default function Navbar() {
           data-bs-toggle="collapse"
           data-bs-target="#navbarNav"
         >
-          <span className="navbar-toggler-icon"></span>
+          <span className="navbar-toggler-icon">
+          </span>
         </button>
 
         <div className="navbar-ul-contenedor collapse navbar-collapse justify-content-end" id="navbarNav">
