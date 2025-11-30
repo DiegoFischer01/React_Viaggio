@@ -36,7 +36,7 @@ function MiViaje() {
 
     try {
       // Obtener token
-      const token = localStorage.getItem('token');
+      const token = sessionStorage.getItem('token');
       if (!token) {
         alert("Necesitas iniciar sesión para reservar.");
         setCargando(false);

@@ -35,23 +35,15 @@ const ViajesPlaneadosCard = ({ title, text, fechaLlegada }) => {
   return (
     <div className="perfil-usuario card mb-3">
       <div className="card-body">
-
         <h5 className="card-title mb-1">{title}</h5>
 
         <Countdown fechaLlegada={fechaLlegada} />
 
         <p className="card-text mb-3">{text}</p>
-
-        <div className="d-flex gap-2">
-          <button className="btn btn-outline-primary btn-sm">Ver detalles</button>
-          <button className="btn btn-success btn-sm">Sincronizar viaje</button>
-        </div>
-
       </div>
     </div>
   );
 };
-
 
 const ViajesPlaneados = ({ reservas }) => {
   const fechaHoy = new Date();

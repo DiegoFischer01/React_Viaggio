@@ -17,7 +17,6 @@ const PerfilHeader = () => {
       <h2>{user?.nombre || "Usuario"}</h2>
 
       <p className="text-muted">"Siempre buscando nuevos horizontes ✈️"</p>
-      <button className="btn btn-warning">Editar perfil</button>
     </div>
   );
 };

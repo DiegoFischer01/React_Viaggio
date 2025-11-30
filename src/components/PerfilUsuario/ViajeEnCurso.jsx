@@ -17,7 +17,6 @@ const ViajeEnCursoCard = ({ titulo, fecha, alojamiento, actividades }) => {
             ? actividades.join(", ")
             : "No especificadas"}
         </p>
-        <button className="btn btn-outline-primary btn-sm">Ver detalles</button>
       </div>
     </div>
   );
@@ -47,7 +46,7 @@ const ViajeEnCurso = ({ reservas }) => {
           const actividadesArray = reserva.actividades?.map(
             (actividad) => actividad.titulo
           );
-
+          console.log(reserva.idReserva);
           return (
             <ViajeEnCursoCard
               key={reserva.idReserva}
