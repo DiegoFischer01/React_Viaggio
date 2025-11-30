@@ -1,6 +1,8 @@
 import generarTextoFecha from "../../utils/generarTextoFecha";
 
 const ViajesRealizadosCard = ({ titulo, fecha, alojamiento, actividades }) => {
+  const actividadesArray = Array.isArray(actividades) ? actividades : [];
+
   return (
     <div className="perfil-usuario card mb-3">
       <div className="card-body">
@@ -13,9 +15,10 @@ const ViajesRealizadosCard = ({ titulo, fecha, alojamiento, actividades }) => {
         </p>
         <p className="card-text">
           <strong>Actividades:</strong>{" "}
-          {actividades ? actividades.join(", ") : "No especificadas"}
+          {actividadesArray.length > 0
+            ? actividadesArray.join(", ")
+            : "No especificadas"}
         </p>
-        <button className="btn btn-outline-primary btn-sm">Ver detalles</button>
       </div>
     </div>
   );
@@ -34,14 +37,13 @@ const ViajesRealizados = ({ reservas }) => {
 
   return (
     <div className="tab-pane" id="realizados" role="tabpanel">
-
       {reservasCompletadas.length === 0 ? (
         <p>No tenés viajes completados.</p>
       ) : (
         reservasCompletadas.map((reserva) => {
-          const actividadesString = reserva.actividades
-            ?.map((actividad) => actividad.titulo)
-            .join(", ");
+          const actividadesArray = reserva.actividades?.map(
+            (actividad) => actividad.titulo
+          );
 
           return (
             <ViajesRealizadosCard
@@ -52,7 +54,7 @@ const ViajesRealizados = ({ reservas }) => {
                 reserva.fechaRegreso
               )}
               alojamiento={reserva.hotel.nombre}
-              actividades={actividadesString}
+              actividades={actividadesArray}
             />
           );
         })

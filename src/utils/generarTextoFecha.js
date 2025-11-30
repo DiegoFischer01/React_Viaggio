@@ -1,9 +1,20 @@
 function generarTextoFecha(fechaInicio, fechaFin) {
   const inicio = new Date(fechaInicio);
-  const fin = new Date(fechaFin);
+  const fin = fechaFin ? new Date(fechaFin) : null;
 
-  if (isNaN(inicio) || isNaN(fin)) {
-    return "Alguna de las fechas es inválida.";
+  if (isNaN(inicio)) {
+    return "La fecha de llegada es inválida.";
+  }
+
+  if (!fin) {
+    const diaInicio = inicio.getDate();
+    const mesInicio = inicio.toLocaleDateString("es-ES", { month: "long" });
+    const añoInicio = inicio.getFullYear();
+    return `Desde el ${diaInicio} de ${mesInicio} de ${añoInicio}`;
+  }
+
+  if (isNaN(fin)) {
+    return "La fecha de regreso es inválida.";
   }
 
   const diaInicio = inicio.getDate();
@@ -16,7 +27,6 @@ function generarTextoFecha(fechaInicio, fechaFin) {
   const añoFin = fin.getFullYear();
 
   const mismoMes = inicio.getMonth() === fin.getMonth() && añoInicio === añoFin;
-
   const mismoAño = añoInicio === añoFin;
 
   let mensaje;
