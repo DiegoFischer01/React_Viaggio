@@ -126,6 +126,7 @@ function MiViaje() {
             <h2 className="text-md-end text-center pe-md-5">Actividades</h2>
             <ItinerarioActividades itinerario={itinerario} />
             <button
+              className='btn-reservar'
               id="btnReservar"
               onClick={reservarViaje}
               disabled={cargando}
