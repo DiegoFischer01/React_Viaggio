@@ -105,8 +105,10 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
     const confirmar = window.confirm("¿Seguro que desea borrar este alojamiento?");
 
     if(!confirmar) return;
+    
 
     
+
     const res = await fetch(`${API}/hoteles/${id}`, {
       method: "DELETE",
     });
