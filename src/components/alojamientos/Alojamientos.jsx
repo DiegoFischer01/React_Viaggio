@@ -3,6 +3,7 @@ import CardAlojamiento from './CardAlojamiento';
 import { imagenesHoteles } from '../../data/imagenesHoteles';
 import { useAuth } from '../../context/AuthContext';
 import { use, useState } from 'react';
+import API from "../../config/api";
 
 function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) {
   const handleSeleccionar = (hotel) => {
@@ -105,7 +106,7 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
 
     if(!confirmar) return;
 
-    const res = await fetch(`http://localhost:3000/hoteles/${id}`, {
+    const res = await fetch(`${API}/hoteles/${id}`, {
       method: "DELETE",
     });
 
