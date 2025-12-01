@@ -3,6 +3,7 @@ import ResumenViaje from '../components/MiViaje/ResumenViaje';
 import ItinerarioActividades from '../components/MiViaje/ItinerarioActividades';
 import BotonVolver from '../components/MiViaje/BotonVolver';
 import { jwtDecode } from "jwt-decode";
+import API from "../config/api"
 
 import '../css/miViaje.css';
 const filterIcon = "https://cdn-icons-png.flaticon.com/512/54/54481.png";
@@ -65,7 +66,7 @@ function MiViaje() {
       console.log('DTO a enviar:', reservaDTO); // Depuración
 
       // Guardar reserva
-      const resCrear = await fetch('http://localhost:3000/reservas', {
+      const resCrear = await fetch(`${API}/reservas`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -84,7 +85,7 @@ function MiViaje() {
       const reservaCreada = await resCrear.json();
 
       // Enviar mail de confirmación
-      const resMail = await fetch(`http://localhost:3000/reservas/${reservaCreada.idReserva}/enviar-confirmacion`, {
+      const resMail = await fetch(`${API}/reservas/${reservaCreada.idReserva}/enviar-confirmacion`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` }
       });

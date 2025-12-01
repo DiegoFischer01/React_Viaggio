@@ -5,6 +5,7 @@ import "../css/actividades.css";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useLocation } from "react-router-dom";
 import { useRef } from "react";
+import API from "../config/api.js";
 
 export default function Actividades() {
     const { user } = useAuth();
@@ -48,7 +49,7 @@ export default function Actividades() {
     // 🔥 CARGAR ACTIVIDADES DESDE BACKEND
     // =========================================
     useEffect(() => {
-        fetch("http://localhost:3000/actividades")
+        fetch(`${API}/actividades`)
         .then((res) => res.json())
         .then((data) => setActividades(data))
         .catch((err) => console.error("Error cargando actividades ", err));
@@ -79,7 +80,7 @@ export default function Actividades() {
         const confirmar = window.confirm("¿Seguro que deseas borrar esta actividad?");
         if (!confirmar) return;
 
-        const res = await fetch(`http://localhost:3000/actividades/${id}`, {
+        const res = await fetch(`${API}/actividades/${id}`, {
         method: "DELETE",
         });
 

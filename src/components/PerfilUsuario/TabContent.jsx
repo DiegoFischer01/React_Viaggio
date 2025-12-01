@@ -5,6 +5,7 @@ import Favoritos from "./Favoritos";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext.jsx";
 import ViajeEnCurso from "./ViajeEnCurso.jsx";
+import API from "../../config/api.js"
 
 const components = {
   "enCurso-tab": ViajeEnCurso,
@@ -25,7 +26,7 @@ const TabContent = ({ selectedTab }) => {
     const fetchReservas = async () => {
       try {
         const res = await fetch(
-          `http://localhost:3000/usuarios/${user.id}/reservas`,
+          `${API}/usuarios/${user.id}/reservas`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

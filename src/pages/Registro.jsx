@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { useNavigate, Link } from 'react-router-dom';
 import '../css/FormularioRegistro.css';
 import imgRegistro from '../assets/registrarse/img-registrarse.png';
+import API from "../config/api";
 
 const Registro = () => {
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ const Registro = () => {
 
     try {
       // Petición al backend NestJS
-      const response = await fetch('http://localhost:3000/usuarios', {
+      const response = await fetch(`${API}/usuarios`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

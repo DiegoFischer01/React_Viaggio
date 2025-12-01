@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "../css/login.css";
 import imgRegistro from "../assets/registrarse/img-registrarse.png";
 import { useAuth } from "../context/AuthContext";
+import API from "../config/api"
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,7 +21,7 @@ const Login = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/usuarios/login", {
+      const response = await fetch(`${API}/usuarios/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password: contraseña }),
