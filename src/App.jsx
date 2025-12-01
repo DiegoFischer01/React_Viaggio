@@ -10,6 +10,8 @@ import AlojamientoDetalle from "./components/alojamientos/AlojamientoDetalles.js
 import "./css/app.css";
 
 
+
+
 import PaginaAlojamientos from "./pages/PaginaAlojamientos.jsx";
 import PerfilUsuario from "./pages/PerfilUsuario.jsx";
 import SobreViaggio from "./pages/SobreViaggio.jsx";
@@ -41,6 +43,7 @@ export default function App() {
         <Route path="/alojamientosDetalles/:id" element={<AlojamientoDetalle />} />
       </Routes>
       {!shouldHideLayout && <Footer />}
+      
     </>
   );
 }

@@ -52,6 +52,7 @@ function PaginaAlojamientos() {
     }
   }, [fechaLlegada, fechaRegreso]);
 
+  console.log("ENV PROD:", import.meta.env.VITE_BACKEND_URL);
 
   // Cargar hoteles desde backend
   useEffect(() => {
@@ -59,6 +60,8 @@ function PaginaAlojamientos() {
       .then((res) => res.json())
       .then((data) => setHoteles(data));
   }, []);
+
+  console.log("ENV PROD:", import.meta.env.VITE_BACKEND_URL);
 
   // Guardar ciudad y fechas automáticamente en localStorage
   useEffect(() => {
