@@ -9,17 +9,23 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const savedUser = sessionStorage.getItem("user");
     const savedToken = sessionStorage.getItem("token");
+
     if (savedUser && savedToken) {
+      // limpiamos token desde el comienzo
+      const cleanToken = savedToken.trim().replace(/\s+/g, "");
       setUser(JSON.parse(savedUser));
-      setToken(savedToken);
+      setToken(cleanToken);
     }
   }, []);
 
   const login = (data) => {
+    const cleanToken = data.token.trim().replace(/\s+/g, "");
+
     setUser(data.user);
-    setToken(data.token);
+    setToken(cleanToken);
+
     sessionStorage.setItem("user", JSON.stringify(data.user));
-    sessionStorage.setItem("token", data.token);
+    sessionStorage.setItem("token", cleanToken);
   };
 
   const logout = () => {
