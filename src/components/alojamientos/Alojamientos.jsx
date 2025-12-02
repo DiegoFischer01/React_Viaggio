@@ -76,7 +76,7 @@ function Alojamientos({ alojamientos, alojamientoSeleccionado, onSeleccionar }) 
 
     //SI ESTAMOS EDITANDO USAR PUT
     if(hotelEditado) {
-      url = `http://localhost:3000/hoteles/${hotelEditado}`;
+      url = `${API}/hoteles/${hotelEditado}`;
       method = "PUT";
     }
 

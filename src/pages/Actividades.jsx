@@ -101,11 +101,11 @@ export default function Actividades() {
         imagenUrl,
         };
 
-        let url = "http://localhost:3000/actividades";
+        let url = `${API}/actividades`;
         let method = "POST";
 
         if (actividadEditada) {
-        url = `http://localhost:3000/actividades/${actividadEditada}`;
+        url = `${API}/actividades/${actividadEditada}`;
         method = "PATCH";
         }
 
