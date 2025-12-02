@@ -61,7 +61,7 @@ function MiViaje() {
         hotelId: alojamiento.id,
         usuarioId: userId,
         actividadIds: itinerario.map(a => Number(a.id)).filter(id => !isNaN(id))
-      };
+      }; 
 
       console.log('DTO a enviar:', reservaDTO); // Depuración
 
