@@ -21,7 +21,7 @@ const TabContent = ({ selectedTab }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !token) return;
 
     const fetchReservas = async () => {
       try {
@@ -45,7 +45,7 @@ const TabContent = ({ selectedTab }) => {
     };
 
     fetchReservas();
-  }, [user]);
+  }, [user, token]);
 
   if (!user) return <p>Debes iniciar sesión.</p>;
   if (loading) return <p>Cargando reservas...</p>;
