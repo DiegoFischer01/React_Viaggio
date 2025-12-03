@@ -1,0 +1,106 @@
+
+.form-agregarActividad {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 10px;
+}
+
+.form-agregarActividad label {
+  font-weight: 600;
+}
+
+/* Ajuste del botón "Registrarse" */
+.nav-link.btn-warning {
+  border-radius: 5px;
+  padding: 8px 16px;
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+
+.menu-filtros {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  width: 220px;
+  z-index: 1000;
+}
+
+
+
+.actividades.card button {
+  background-color: #ff5411;
+  color: #fff;
+
+  &:hover {
+    background-color: #fa9500;
+    color: #fff;
+  }
+
+  &:active {
+    background-color: #fa9500;
+    color: white !important;
+  }
+}
+
+.actividades.card {
+  background-color: #d9d9d9;
+}
+
+.actividades .card-text {
+  color: rgb(81, 81, 81);
+  font-weight: 400;
+}
+
+.actividades .card-img-top {
+  height: 9.375rem;
+  object-fit: cover;
+}
+
+.ver-mas-btn {
+  background-color: #d9d9d9;
+  border: 1px solid black;
+  border-radius: 0;
+  margin-top: 2rem;
+
+  &:hover {
+    border: 1px solid gray;
+    background-color: #d9d9d9;
+  }
+
+  &:active {
+    background-color: #d9d9d9 !important;
+    border: 1px solid black;
+  }
+}
+
+.contbotones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 0px 200px ;
+}
+
+.boton {
+  background-color: #ff5411;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}

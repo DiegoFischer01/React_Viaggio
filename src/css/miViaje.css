@@ -1,0 +1,78 @@
+/* GENERAL */
+.a-logo img {
+  max-width: 150px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* TARJETA ALOJAMIENTO */
+#info-viaje img {
+  width: 100%;
+  height: auto;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+}
+
+.mi-viaje.card {
+  background-color: #d9d9d9;
+}
+
+.mi-viaje .card-text {
+  color: rgb(81, 81, 81);
+  font-weight: 400;
+}
+
+.mi-viaje .card-img-top {
+  height: 9.375rem;
+  object-fit: cover;
+}
+
+.mi-viaje .card button {
+  background-color: #6750a4;
+  color: #fff;
+}
+
+.mi-viaje.card button:hover {
+  background-color: #fa9500;
+  color: #fff;
+}
+
+.mi-viaje.card button:active {
+  background-color: #fa9500 !important;
+  color: white !important;
+}
+
+/* TARJETA ACTIVIDADES */
+.actividades-img {
+  padding: 0.4rem;
+  height: 150px;
+  object-fit: cover;
+}
+
+
+
+/* BOTÓN VOLVER */
+.contbotones {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 20px 15px 20px;
+}
+
+.btn-reservar {
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  padding: 5px;
+  font-weight: 500;
+  background-color: #ff5411;
+}
+
+.btn-reservar:hover {
+  background-color: #57a366;
+}
+
+
+
+
