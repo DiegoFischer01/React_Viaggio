@@ -104,32 +104,61 @@
   cursor: pointer;
   transition: background-color 0.3s;
 }
-/* SOLO para pantallas chicas */
-@media (max-width: 600px) {
+/* ------------------- RESPONSIVE ------------------- */
+@media (max-width: 768px) {
 
-  /* Botones volver / ver mi viaje */
-  .nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 0.5rem;
+  /* BOTONES VOLVER / VER MI VIAJE */
+  .contbotones {
+    padding: 0 20px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    justify-content: space-between !important;
   }
 
-  .nav-buttons button {
-    flex: 0 0 auto; 
-    width: auto;
+  .contbotones .boton {
+    width: auto !important;
+    padding: 8px 14px;
+    font-size: 0.9rem;
   }
 
-  /* Botones del administrador */
-  .admin-buttons {
-    display: flex;
-    flex-wrap: nowrap;     
-    overflow-x: auto;      
-    gap: 0.5rem;
+  /* BOTONES DE ADMIN (para que no se vayan fuera de pantalla) */
+  .botones-admin,
+  .admin-buttons,
+  .contenedor-admin,
+  .administrador {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 10px;
+    padding: 5px;
   }
 
-  .admin-buttons button {
-    flex: 0 0 auto;        
-    white-space: nowrap;   
+  .botones-admin button,
+  .admin-buttons button,
+  .contenedor-admin button,
+  .administrador button {
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+}
+
+/* Para pantallas muy chicas */
+@media (max-width: 480px) {
+
+  .contbotones {
+    padding: 0 10px !important;
+  }
+
+  .contbotones .boton {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+
+  .botones-admin button,
+  .admin-buttons button,
+  .contenedor-admin button,
+  .administrador button {
+    font-size: 0.85rem;
+    padding: 6px 12px;
   }
 }
