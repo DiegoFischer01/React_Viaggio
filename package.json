@@ -12,13 +12,6 @@
   "dependencies": {
     "boostrap": "^2.0.0",
     "bootstrap": "^5.3.8",
-<<<<<<< HEAD
-    "leaflet": "^1.9.4",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.5",
-    "sweetalert2": "^11.26.3"
-=======
     "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "react": "^19.1.1",
@@ -27,7 +20,6 @@
     "react-router-dom": "^7.9.4",
     "sweetalert2": "^11.26.3",
     "swiper": "^12.0.3"
->>>>>>> 24fb2b9048753cd015343c42e37ebce6c1d3ec79
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",
