@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 import MapaAlojamientos from "../components/MapaAlojamientos/MapaAlojamientos";
 import "../css/home.css";
 
-// 🖼️ Imágenes (importadas desde assets/home)
+// Imágenes (importadas desde assets/home)
 import logo from "../assets/home/logo.svg";
 import iglesiaSanJose from "../assets/home/iglesia-san-jose.png";
 import laMaxima from "../assets/home/la-maxima.jpg";
@@ -162,7 +162,6 @@ export default function Home() {
 
   }, []);
 
-    // JSX ------------------------------------------------------------------------
     return (
         <>
         {/* HERO */}

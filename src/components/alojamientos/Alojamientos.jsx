@@ -76,7 +76,6 @@ function Alojamientos({
     let url = `${API}/hoteles`;
     let method = "POST";
 
-    //SI ESTAMOS EDITANDO USAR PUT
     if (hotelEditado) {
       url = `${API}/hoteles/${hotelEditado}`;
       method = "PUT";

@@ -4,11 +4,12 @@ import { useAuth } from "../context/AuthContext.jsx"
 export default function ProtectedRoute({ children, requiredRole }) {
   const { user } = useAuth();
   
-  //si no esta logueado, redirigir al login
-  if (!user) return <Navigate to="/login" replace />;
+  //si no esta logueado redirigir a la pagina de registro
+  if (!user) return <Navigate to="/register" replace />;
  
-  //si no tiene el rol requerido redirigir al login (o a una futura pagina de prohibido)
+  //si no tiene el rol requerido redirigir al login
   if (requiredRole && user.role !== requiredRole) {
+    alert(`Necesitas tener el rol de ${requiredRole} para acceder a esta página`)
     return <Navigate to="/login" replace />;
   }
 

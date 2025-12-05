@@ -251,7 +251,6 @@ function AlojamientoDetalle() {
     }
   };
 
-  // --------- JSX ---------
   return (
     <div className="detalle-container">
       {/* MINIATURAS */}
@@ -382,7 +381,7 @@ function AlojamientoDetalle() {
               <button
                 className="btn-reserve"
                 onClick={() => {
-                  // 🔥 GUARDAR ALOJAMIENTO SELECCIONADO ANTES DEL SWEETALERT
+                  //  GUARDAR ALOJAMIENTO SELECCIONADO ANTES DEL SWEETALERT
                   const alojamiento = {
                     id: hotel.id,
                     nombre: hotel.nombre,
