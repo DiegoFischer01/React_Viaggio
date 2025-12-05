@@ -24,7 +24,7 @@ import "../css/actividades.css";
         <div className="col-md-4">
         <div className="actividades card rounded-4 h-100 w-100">
 
-            {/* ⚠ Imagen → ahora usa actividad.imagenUrl si existe */}
+            {/*  usa actividad.imagenUrl si existe */}
             <img
             src={actividad.imagenUrl || actividad.imagen}
             className="card-img-top rounded-top-4 img-fluid"
@@ -37,9 +37,9 @@ import "../css/actividades.css";
                 <p className="card-text text-center">{actividad.descripcion}</p>
             </div>
 
-            {/* ======================== */}
+          
             {/* BOTONES ADMIN (si están activos) */}
-            {/* ======================== */}
+         
             {(editMode || deleteMode) && (
                 <div className="d-grid gap-2 d-md-flex justify-content-md-center mb-3">
                 {editMode && (

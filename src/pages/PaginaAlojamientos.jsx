@@ -21,7 +21,7 @@ function PaginaAlojamientos() {
 
   useEffect(() => {
     if (location.pathname === "/alojamientos") {
-      // 🔥 solo limpiar el alojamiento seleccionado
+      // solo limpiar el alojamiento seleccionado
       setAlojamientoSeleccionado(null);
       localStorage.removeItem("alojamientoSeleccionado");
     }
@@ -53,8 +53,6 @@ function PaginaAlojamientos() {
     }
   }, [fechaLlegada, fechaRegreso]);
 
-  console.log("ENV PROD:", import.meta.env.VITE_BACKEND_URL);
-
   // Cargar hoteles desde backend
   useEffect(() => {
     fetch(`${API}/hoteles`)
@@ -62,7 +60,6 @@ function PaginaAlojamientos() {
       .then((data) => setHoteles(data));
   }, []);
 
-  console.log("ENV PROD:", import.meta.env.VITE_BACKEND_URL);
 
   // Guardar ciudad y fechas automáticamente en localStorage
   useEffect(() => {
@@ -78,7 +75,7 @@ function PaginaAlojamientos() {
 
 
   const handleSeleccionar = (hotel) => {
-    // 🔒 Si no está logeado → cartel + redirección
+    // Si no está logeado → cartel + redirección
     if (!user) {
       Swal.fire({
         icon: "info",
@@ -92,7 +89,7 @@ function PaginaAlojamientos() {
       return;
     }
 
-    // Si deselecciona → limpiar
+    // Si deselecciona -> limpiar
     if (!hotel) {
       setAlojamientoSeleccionado(null);
       localStorage.removeItem('alojamientoSeleccionado');

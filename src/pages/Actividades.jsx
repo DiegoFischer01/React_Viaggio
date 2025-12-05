@@ -46,9 +46,9 @@ export default function Actividades() {
     }, [location.pathname]);
 
 
-    // =========================================
-    // 🔥 CARGAR ACTIVIDADES DESDE BACKEND
-    // =========================================
+ 
+    //  CARGAR ACTIVIDADES DESDE BACKEND
+ 
     useEffect(() => {
         fetch(`${API}/actividades`)
         .then((res) => res.json())
@@ -56,9 +56,9 @@ export default function Actividades() {
         .catch((err) => console.error("Error cargando actividades ", err));
     }, []);
 
-    // =========================================
-    // 🔥 ADMIN: funciones
-    // =========================================
+  
+    //  ADMIN: funciones
+   
     const limpiarForm = () => {
         setTitulo("");
         setDescripcion("");
@@ -110,11 +110,6 @@ export default function Actividades() {
         method = "PATCH";
         }
 
-        console.log("EDITANDO:", actividadEditada);
-        console.log("URL:", url);
-        console.log("fetch keyword test:", fetch);
-
-
         const res = await fetch(url, {
         method,
         headers: { "Content-Type": "application/json" },
@@ -130,9 +125,9 @@ export default function Actividades() {
         }
     };
 
-    // =========================================
-    // 🔥 ITINERARIO
-    // =========================================
+  
+    //  ITINERARIO
+  
     useEffect(() => {
         localStorage.setItem("itinerario", JSON.stringify(itinerario));
     }, [itinerario]);
@@ -154,9 +149,7 @@ export default function Actividades() {
 
         
 
-        {/* ===========================
-            🔥 ADMIN BOTONES
-        =========================== */}
+        {/* ADMIN BOTONES*/}
         {isAdmin && (
             <div className="contbotones mt-4">
                 <div>
@@ -199,9 +192,7 @@ export default function Actividades() {
             </div>
         )}
 
-        {/* ===========================
-            🔥 MODAL ADMIN
-        =========================== */}
+        {/* MODAL ADMIN */}
         {showForm && (
             <div className="modal-overlay">
                 <div className="modal-content">
@@ -251,9 +242,7 @@ export default function Actividades() {
             </div>
         )}
 
-        {/* ===========================
-            TARJETAS
-        =========================== */}
+        {/*  TARJETAS*/}
         <div className="d-flex align-items-center justify-content-center">
             <div className="m-4 row gy-5 gx-5 align-items-stretch">
             {actividades
